@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<!--
+  Template il faudra remplacer les 4 chaines entre @@: 
+  RELEASE_VERSION DATE COMMIT PIPELINE
+  avant mise en place
+-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset: iso-8859-15" />
+<meta name="language" content="french" />
+<meta name="robots" content="index,follow" />
+<meta  name="description" content="Menu Gitlab-pages" />
+<title>Outils pages (Version = @RELEASE_VERSION@ - @DATE@)</title>
+<link rel="ICON" href="Outils.png"/>
+</head>
+<body>
+    <!--/* //NOSONAR */-->
+
+<!-- https://next.sonarqube.com/sonarqube/coding_rules?open=Web%3AS5256&rule_key=Web%3AS5256 -->
+<div style="text-align:left; background-color: rgb(214, 203, 139);
+border: 3px solid rgb(62, 66, 1);">
+<span style="text-align:left; background-color: rgb(214, 203, 139);
+opacity: 0.5;border: 3px solid rgb(62, 66, 1);"><table aria-hidden="true"><tr>
+	<th id="logoOutils" rowspan ="5" style="vertical-align: middle;">&nbsp;<img src="Outils.png" 
+	style="width:48px;height:48px;border-style: none;vertical-align:middle;" 
+	alt="Outils Version = @RELEASE_VERSION@" 
+	title="Outils Version = @RELEASE_VERSION@" />&nbsp;</th>
+	<th id="nomproj">&nbsp;Nom du projet :&nbsp;</th><th id="Outils">&nbsp;Outils&nbsp;</th></tr>
+	<tr><td>&nbsp;Version =&nbsp;</td><td>&nbsp;@RELEASE_VERSION@&nbsp;</td></tr>
+	<tr><td>&nbsp;g&eacute;n&eacute;r&eacute; le : </td><td>&nbsp;@DATE@&nbsp;</td></tr>
+	<tr><td>&nbsp;Commit :&nbsp;</td><td>&nbsp;<a 
+	href="https://github.com/bruschin/Outils/commit/@COMMIT@" 
+	target="_blank">@COMMIT@</a></td></tr>
+	<tr><td>&nbsp;Pipeline :&nbsp;</td><td>&nbsp;<a 
+	href="https://github.com/bruschin/Outils/actions/runs/@PIPELINE@" 
+	target="_blank">@PIPELINE@</a></td></tr></table></span><br />
+<ul>
+<li>🤏 <a href="doxygen/html/index.html" id="Documentation_Doxygen" 
+target="_blank" 
+title="Documentation du code source générée par Doxygen">Documentation
+générée par Doxygen</a></li>
+<li>🤌 <a href="sphinx-html/index.html" id="Documentation_sphinx_html" 
+target="_blank" 
+title="Documentation du code source générée par sphinx">Documentation
+html générée par Sphinx</a></li>
+<li>🙏 Couverture du code source par des tests 
+unitaires en python version : <a href="htmlcov/3.12/index.html" 
+id="cov_3.12" target="_blank" 
+title="Couverture du code source python 3.12 par des tests 
+unitaires. Générée avec pytest">3.12</a>&nbsp;<a href="htmlcov/3.11/index.html" 
+id="cov_3.11" target="_blank" 
+title="Couverture du code source python 3.11 par des tests 
+unitaires. Générée avec pytest">3.11</a>&nbsp;<a href="htmlcov/3.10/index.html" 
+id="cov_3.10" target="_blank" 
+title="Couverture du code source python 3.10 par des tests 
+unitaires. Générée avec pytest">3.10</a></li>
+<li>🤝 <a href="tox_cov_html/index.html" id="tox coverage" target="_blank" 
+title="Couverture du code source python 3.12 par des tests 
+unitaires. Générée par tox">3.12</a>Coverage tox</a></li>
+<li>🤞 <a href="https://sonarcloud.io/project/overview?id=bruschin_Outils" 
+id="projet_sonarcoverage" target="_blank" 
+title="Projet requete_fin_mois dans SonarQube"><img 
+src="https://sonarcloud.io/api/project_badges/measure?project=
+bruschin_Outils&metric=alert_status" 
+alt="Outils Quality Gate" title="Outils Quality Gate" 
+width="48px"/> Projet Outils dans SonarQube</a></li>
+</ul>
+<br />
+
+<span style="text-align:left; background-color: rgb(214, 203, 139);
+border: 3px solid rgb(62, 66, 1);">Fichiers des Logs : </span><br />
+<ul>
+<li>🤡 <a href="build-rapport.txt" id="build" target="_blank" 
+title="Log packaging">Build</a></li>
+<li>🤏 <a href="doxygen-rapport.txt" id="doxygen" target="_blank" 
+title="Log doxygen">Doxygen</a></li>
+<li>🙈 <a href="mefversions-rapport.txt" id="mise_en_forme" target="_blank" 
+title="Log mise en forme">Mef_versions</a></li>
+<li>🤪 <a href="pylint-rapport.txt" id="pylint" target="_blank" 
+title="Log pylint">Pylint</a></li>
+<!--
+<li>🤞 <a href="sonar-rapport.txt" id="sonar" target="_blank" 
+title="Log sonar">Sonar-scanner</a></li>
+-->
+<li>🙏 Pytest en python Version : <a href="pytest-rapport.3.12.txt" 
+id="pytest312" target="_blank" title="Log pytest 3.12">3.12</a>,&nbsp;<a 
+href="pytest-rapport.3.11.txt" id="pytest311" 
+target="_blank" title="Log pytest 3.11">3.11</a>,&nbsp;<a 
+href="pytest-rapport.3.10.txt" id="pytest310" 
+target="_blank" title="Log pytest 3.10">3.10</a></li>
+<li>😻 <a href="ruff-rapport.txt" id="ruff" target="_blank" 
+title="Log ruff">Ruff</a></li>
+<li>😀 <a href="shellcheck-rapport.txt" id="shellcheck" target="_blank" 
+title="Log shellcheck">Shellcheck</a></li>
+<li>🤌 <a href="sphinx-rapport.txt" id="sphinx" target="_blank" 
+title="Log sphinx">Sphinx</a></li>
+<li>🤝 <a href="tox-rapport.txt" id="tuff" target="_blank" 
+title="Log tox">Tox</a></li>
+</ul></div>
+</body>
+</html>
