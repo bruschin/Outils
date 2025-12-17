@@ -35,7 +35,7 @@
 		[2023-04-13] BN V1.2 : Test unitaires + corretion bug _conversion_heures 
 													 %02d prise en compte 1 ou 3 badgeages => 1 ou 2 ou 3.
 		[2024-09-11] BN V1.3 : Ajout calcul systeme pivot autre que 37h5j
-		[2025-12-16] CA V1.4.0 : Ajout calcul gain bilan
+		[2025-12-17] CA V1.4.1 : Ajout calcul gain bilan
 """
 
 ## Bibliotheques ##
@@ -47,7 +47,7 @@ from datetime import datetime
 # VARIABLES GLOBALES :
 
 FILENAME = "pegase.py"
-VERSION = f"  {FILENAME}: [2025-12-16] CA V1.4.0\n"
+VERSION = f"  {FILENAME}: [2025-12-17] CA V1.4.1\n"
 USAGE = (f"  usage: {FILENAME} [OPTIONS]\n" +\
 "  OPTIONS:\n"
 "  [09:31 - 12h00 - 12H38] 1 à 4 badgeage(s) OBLIGATOIRE(S)\n" +\
@@ -319,8 +319,13 @@ def _compute_gain(arrivee: int, pause: int, depart: int) -> str:
 		chaine décrivant le gain/perte de la journée (str)
 	"""
 	jmax = 10 * 60
-	duree = depart - (arrivee + pause)
-	gain = min((DUREE_JOUR - duree), (DUREE_JOUR - jmax))
+	fixemat = (11 * 60 )+ 30
+	if depart < fixemat:
+		duree = depart - arrivee
+	else:
+		duree = depart - (arrivee + pause)
+  
+	gain = max((DUREE_JOUR - duree), (DUREE_JOUR - jmax))
 
 	if gain < 0:
 		result = "gain" if duree < jmax else "gain (max)"
