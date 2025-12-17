@@ -40,10 +40,10 @@ workflow:
 
 .some-actions-before: &some-actions-before
   - apt-get update || true
-  - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov \
-      dia doxygen curl build-essential zlib1g-dev libffi-dev || true 
-  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev \
-      libncurses-dev tk-dev libssl-dev liblzma-dev || true
+  - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov dia 
+    doxygen curl build-essential zlib1g-dev libffi-dev || true 
+  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
+    tk-dev libssl-dev liblzma-dev || true
 
 before_script:
   # Normalize package name once at the start of any job
