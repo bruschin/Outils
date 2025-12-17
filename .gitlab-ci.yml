@@ -45,7 +45,7 @@ before_script:
   # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
   - apt update || true
   # - apt-get install -y python3-ldap3 || true
-  - apt-get install -y shellcheck || true
+  - apt-get install -y shellcheck git || true
   - apt-get install -y graphviz rhino lcov dia doxygen curl || true  
   - apt-get install -y build-essential zlib1g-dev libffi-dev || true 
   - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev  || true
