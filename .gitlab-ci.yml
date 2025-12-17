@@ -38,22 +38,30 @@ workflow:
     - if: $CI_PROJECT_URL =~ "https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git"
       when: always
 
+.some-actions-before: &some-actions-before
+  - apt-get update || true
+  - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov \
+      dia doxygen curl build-essential zlib1g-dev libffi-dev || true 
+  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev \
+      libncurses-dev tk-dev libssl-dev liblzma-dev || true
+
 before_script:
   # Normalize package name once at the start of any job
   - export NORMALIZED_NAME=$(echo "${CI_PROJECT_NAME}" | tr '-' '_') || true
+  - export TXT_RED="\e[31m" && TXT_CLEAR="\e[0m"
+  - export TXT_YELLOW="\e[33m"
   # Use Météo-France's own PyPI-like registry, more info at
   # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
-  - apt-get update 1>/dev/null 2>/dev/null || true
-  # - apt-get install -y python3-ldap3 || true
-  - apt-get install -y shellcheck git ca-certificates 1>/dev/null 2>/dev/null || true
-  - apt-get install -y graphviz rhino lcov dia doxygen curl 1>/dev/null 2>/dev/null || true  
-  - apt-get install -y build-essential zlib1g-dev libffi-dev 1>/dev/null 2>/dev/null || true 
-  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev 1>/dev/null 2>/dev/null || true
-  - apt-get install -y libncurses-dev tk-dev libssl-dev 1>/dev/null 2>/dev/null || true
-  - apt-get install -y python3.12 python3.12-venv liblzma-dev 1>/dev/null 2>/dev/null || true
+  
+  - *some-actions-before
+  
   - cd "$CI_PROJECT_DIR"
+
+  - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
+
+  - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
   - git config --global http.sslVerify false
   - git config --global https.sslVerify false
   - git config --global https.proxy http://proxy.meteo.fr:11011
@@ -62,19 +70,26 @@ before_script:
   - echo "insecure" >> $HOME/.curlrc
   - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
   - update-ca-certificates -f
+
+  - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
   # - curl -kfsSL https://pyenv.run | bash || true
   - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
   - export PATH="$PYENV_ROOT/bin:$PATH"
   - eval "$(pyenv init - bash)" || true
   - mkdir -p ~/.pyenv/cache/ || true 
-  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
-  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz
-  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
-  - pyenv install 3.10.19 1>/dev/null 2>/dev/null || true
-  - pyenv install 3.11.14 1>/dev/null 2>/dev/null || true
-  - pyenv install 3.12.12 1>/dev/null 2>/dev/null || true
+  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz \
+      https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
+  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz \
+      https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true 
+  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz \
+      https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
+  - pyenv install 3.10.19 || true
+  - pyenv install 3.11.14 || true
+  - pyenv install 3.12.12 || true
   - pyenv global 3.10 3.11 3.12
+
+  - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
   - pip config set global.trusted-host nexus-sidev.meteo.fr || true
   - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
   - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
@@ -83,8 +98,7 @@ before_script:
   - pip install -r docs/requirements.txt --root-user-action=ignore || true
   - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
   #https://misc.flogisoft.com/bash/tip_colors_and_formatting
-  - TXT_RED="\e[31m" && TXT_CLEAR="\e[0m"
-  - TXT_YELLOW="\e[33m"
+  
 
 # composant sonarqube et analyse sécurité
 # https://gitlab.meteo.fr/explore/catalog/ci-cd-catalog-mf/sca
@@ -133,6 +147,8 @@ job:Lint:
     - devtools/lanceur_ruff.bash || true
     - devtools/lanceur_tox.bash || true
     - devtools/lanceur_shellcheck.bash || true
+
+    - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
     - ls -ail rapports/*
     - mv rapports/*txt public/ || true
     - mv -f rapports/htmlcov* public/ || true
@@ -217,11 +233,11 @@ job:Packaging:
     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
     - devtools/lanceur_build.bash || true
     - mv rapports/*txt public/ || true
-    - ls -ail dist/*
+    - ls -ail build/*
   artifacts:
     paths:
       - public
-      - dist
+      - build
   only:
     - main
 
