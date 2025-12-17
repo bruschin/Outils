@@ -43,14 +43,14 @@ before_script:
   - export NORMALIZED_NAME=$(echo "${CI_PROJECT_NAME}" | tr '-' '_') || true
   # Use Météo-France's own PyPI-like registry, more info at
   # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
-  - apt-get update || true
+  - apt-get update 1>/dev/null 2>/dev/null || true
   # - apt-get install -y python3-ldap3 || true
-  - apt-get install -y shellcheck git ca-certificates || true
-  - apt-get install -y graphviz rhino lcov dia doxygen curl || true  
-  - apt-get install -y build-essential zlib1g-dev libffi-dev || true 
-  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev  || true
-  - apt-get install -y libncurses-dev tk-dev libssl-dev  || true
-  - apt-get install -y python3.12 python3.12-venv liblzma-dev || true
+  - apt-get install -y shellcheck git ca-certificates 1>/dev/null 2>/dev/null || true
+  - apt-get install -y graphviz rhino lcov dia doxygen curl 1>/dev/null 2>/dev/null || true  
+  - apt-get install -y build-essential zlib1g-dev libffi-dev 1>/dev/null 2>/dev/null || true 
+  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev 1>/dev/null 2>/dev/null || true
+  - apt-get install -y libncurses-dev tk-dev libssl-dev 1>/dev/null 2>/dev/null || true
+  - apt-get install -y python3.12 python3.12-venv liblzma-dev 1>/dev/null 2>/dev/null || true
   - cd "$CI_PROJECT_DIR"
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
@@ -71,9 +71,9 @@ before_script:
   - curl -k --output-dir ~/.pyenv/cache/ https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
   - curl -k --output-dir ~/.pyenv/cache/ https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz
   - curl -k --output-dir ~/.pyenv/cache/ https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
-  - pyenv install 3.10.19 || true
-  - pyenv install 3.11.14 || true
-  - pyenv install 3.12.12 || true
+  - pyenv install 3.10.19 1>/dev/null 2>/dev/null || true
+  - pyenv install 3.11.14 1>/dev/null 2>/dev/null || true
+  - pyenv install 3.12.12 1>/dev/null 2>/dev/null || true
   - pyenv global 3.10 3.11 3.12
   - pip config set global.trusted-host nexus-sidev.meteo.fr || true
   - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
