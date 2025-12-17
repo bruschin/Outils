@@ -38,6 +38,7 @@ workflow:
     - if: $CI_PROJECT_URL =~ "https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git"
       when: always
 
+# https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html 
 .some-actions-before: &some-actions-before
   - apt-get update || true
   - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov dia 
