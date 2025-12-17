@@ -13,7 +13,7 @@ variables:
 
   #$CI_COMMIT_REF_SLUG = master
   PACKAGE_NAME: ${CI_PROJECT_NAME}
-  VERSION: "1.4.1"
+  VERSION: "1.4.2"
   CI_DEBUG_TRACE: "false" # activation mode debug  => true
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
   GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
@@ -35,7 +35,7 @@ workflow:
   rules:
     - if: $CI_PROJECT_URL =~ "https://git.meteo.fr/enm_test/requete_fin_mois"
       when: never
-    - if: $CI_PROJECT_URL =~ "https://gitlab.meteo.fr/desr-sires-pga/support_n1/Outils.git"
+    - if: $CI_PROJECT_URL =~ "https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git"
       when: always
 
 before_script:
