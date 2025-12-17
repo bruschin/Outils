@@ -73,8 +73,7 @@ before_script:
 
   - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
   # - curl -kfsSL https://pyenv.run | bash || true
-  - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer
-    /master/bin/pyenv-installer | bash || true
+  - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
   - export PATH="$PYENV_ROOT/bin:$PATH"
   - eval "$(pyenv init - bash)" || true
