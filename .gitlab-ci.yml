@@ -44,13 +44,13 @@ before_script:
   # Use Météo-France's own PyPI-like registry, more info at
   # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
   - apt update || true
-  - apt install -y python3-ldap3 || true
-  - apt install -y shellcheck || true
-  - apt-get install -y graphviz rhino lcov dia doxygen shellcheck || true  
+  # - apt-get install -y python3-ldap3 || true
+  - apt-get install -y shellcheck || true
+  - apt-get install -y graphviz rhino lcov dia doxygen curl || true  
   - apt-get install -y build-essential zlib1g-dev libffi-dev || true 
   - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev  || true
   - apt-get install -y libncurses-dev tk-dev libssl-dev  || true
-  - apt install -y python3.12 python3.12-venv liblzma-dev || true
+  - apt-get install -y python3.12 python3.12-venv liblzma-dev || true
   - cd "$CI_PROJECT_DIR"
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
