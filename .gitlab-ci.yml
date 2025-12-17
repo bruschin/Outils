@@ -54,6 +54,10 @@ before_script:
   - cd "$CI_PROJECT_DIR"
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
+  - git config --global http.sslVerify false
+  - git config --global https.sslVerify false
+  - git config --global https.proxy http://proxy.meteo.fr:11011
+  - set GIT_SSL_NO_VERIFY
   # - curl -kfsSL https://pyenv.run | bash || true
   - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
