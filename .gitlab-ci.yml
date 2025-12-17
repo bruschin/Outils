@@ -54,7 +54,8 @@ before_script:
   - cd "$CI_PROJECT_DIR"
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
-  - curl -kfsSL https://pyenv.run | bash || true
+  # - curl -kfsSL https://pyenv.run | bash || true
+  - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
   - export PATH="$PYENV_ROOT/bin:$PATH"
   - eval "$(pyenv init - bash)" || true
