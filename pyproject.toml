@@ -1,6 +1,6 @@
 [project]
 name = "Outils"
-version = "@RELEASE_VERSION@"
+version = "1.4.2"
 description = """
 Affichage bilan journalier Pegase selon badgeages et heure départ.
 """

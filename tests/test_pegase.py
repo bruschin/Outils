@@ -111,8 +111,11 @@ def test_undeux_badgeages():
 	"""
 	for lst_badges in [[570],[570, 690]]:
 		try:
-			assert traitement( lst_badges ) == (   0, \
-				'depart min : 17H39')
+			if lst_badges == [570]:
+				assert traitement( lst_badges ) == (0, 'depart min : 17H39')
+			else:
+				assert traitement( lst_badges ) == (0, 'depart min : 19H24')
+
 		except AssertionError as msgici:
 			assert False , \
 				f"\n\t>>>>ERREUR test_undeux_badgeages :\n{msgici}"

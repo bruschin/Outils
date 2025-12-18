@@ -35,7 +35,8 @@
 		[2023-04-13] BN V1.2 : Test unitaires + corretion bug _conversion_heures 
 													 %02d prise en compte 1 ou 3 badgeages => 1 ou 2 ou 3.
 		[2024-09-11] BN V1.3 : Ajout calcul systeme pivot autre que 37h5j
-		[2025-12-17] CA V1.4.1 : Ajout calcul gain bilan
+		[2025-12-17] CA V1.4.1 : Ajout calcul gain bilan + gestion 4 badgeages
+    [2025-12-18] BN V1.4.2 : Gestion départ avec 1 ou 2 badgeages
 """
 
 ## Bibliotheques ##
@@ -47,7 +48,7 @@ from datetime import datetime
 # VARIABLES GLOBALES :
 
 FILENAME = "pegase.py"
-VERSION = f"  {FILENAME}: [2025-12-17] CA V1.4.1\n"
+VERSION = f"  {FILENAME}: [2025-12-18] BN V1.4.2\n"
 USAGE = (f"  usage: {FILENAME} [OPTIONS]\n" +\
 "  OPTIONS:\n"
 "  [09:31 - 12h00 - 12H38] 1 à 4 badgeage(s) OBLIGATOIRE(S)\n" +\
@@ -59,7 +60,11 @@ DUREE_JOUR = 7 * 60 + 24  # 7h24 convertis en minutes (37h sur 5 j = 7h24 par jo
 DUREE_PAUSE_DEFAUT = 45
 SEPARHM = ["H",":"]
 SEPARBADGE = ["-","/"]
-HMIN = 16 * 60 # fin plage fixe après-midi
+DEBPLGFIXAPRM = 14 * 60 # debut plage fixe après-midi
+FINPLGFIXAPRM = 16 * 60 # fin plage fixe après-midi
+FINPLGFIXMAT = (11 * 60) + 30 # fin plage fixe après-midi
+DUREEJMAX = 10 * 60
+HEUREMAXDEP = 20 * 20 # pas au delà de 20h00
 
 ## Fonctions :
 ##############
@@ -126,7 +131,7 @@ def gestion_parametre(*args):
 	Gestion des parametres d'appel
 
 	[ EN ENTREE ]
-			*args = Tous les parametres d'appel du script
+			*args = Tous les parametres d'appel du script (filtrés du nom du script)
 
 	[ EN SORTIE ]
 			bretour (int)  0 ou 1
@@ -191,14 +196,25 @@ def traitement(tabminutes):
 	uncompteur = len(tabminutes)
 
 	match uncompteur:
+		case 1:
+			if tabminutes[0] >= FINPLGFIXMAT:
+				# cas imprevu pour ce calcul
+				bret = 1
+				scom = '\n\t>>>> IMPREVU: Arrivée après fin plage fixe matin\n\n'
+			else:
+				scom = \
+      		_extracted_from_traitement( tabminutes,DUREE_PAUSE_DEFAUT,
+																			uncompteur)
+		case 2:
+			scom = _extracted_from_traitement(tabminutes,
+                                     		_duree_pause_unbadgeage(tabminutes[1]),
+                                        uncompteur)
 		case 3:
 			pause = max((tabminutes[2] - tabminutes[1]), DUREE_PAUSE_DEFAUT)
-			scom = _extracted_from_traitement(tabminutes, pause)
+			scom = _extracted_from_traitement(tabminutes, pause, uncompteur)
 		case 4:
 			pause = max((tabminutes[2] - tabminutes[1]), DUREE_PAUSE_DEFAUT)
-			scom = _compute_gain(tabminutes[0], pause, tabminutes[3])
-		case 1|2:
-			scom = _extracted_from_traitement(tabminutes, DUREE_PAUSE_DEFAUT)
+			scom = _compute_gain(tabminutes[0], pause, tabminutes[3], uncompteur)		
 		case _:
 			scom =  f'\n\t>>>> ERREUR: Nombre badgeage {uncompteur}' +\
 							f' imprevu\n\n{USAGE}'
@@ -243,6 +259,21 @@ def _est_un_badgeage_valide(ch_trav, conversion):
 
 	return ret, scom, conversion
 
+def _duree_pause_unbadgeage (desminutes):
+	""" Calcule la pause selon 1 seul badgeage dans la plage fin matin debut aprm
+			hors plage meridienne => diff 14h - 11h30 = 150 minutes
+
+	Args:
+			desminutes (_type_): _description_
+  Returns:
+			duree (entier) minutes
+	"""
+	duree = 150
+	if desminutes >= FINPLGFIXMAT and desminutes <= DEBPLGFIXAPRM:
+		duree = max((desminutes - FINPLGFIXMAT), (DEBPLGFIXAPRM - desminutes))
+
+	return duree
+
 def _conversion_minutes(desheures, desminutes):
 	"""_
 	Conversion heures et minutes passe en appel (de type hh et mm)
@@ -277,20 +308,27 @@ def _conversion_heures(desminutes):
 	# test zfill et rjust
 	return f"{str(lesheures).zfill(2)}H{str(lesminutes).rjust(2, '0')}"
 
-def _extracted_from_traitement(tabminutes, pause):
+def _extracted_from_traitement(tabminutes, pause, nbrbageage=0):
 	"""
 	extraction de code dupliqué dans la fonction traitement
 
 	[ EN ENTREE ]
 		tabminutes (tableau d'entier)
+    pause (entier)
+    nbrbageage (entier)
 
 	[ EN SORTIE ]
 		ch_conv_retour (chaine) formatee
 	"""
 	arrivee = tabminutes[0]
-	soir = max(arrivee + pause + DUREE_JOUR, HMIN)
 
-	if soir == HMIN:
+	if nbrbageage == 1 and arrivee >= FINPLGFIXMAT:
+		# cas imprevu pour ce calcul
+		return "Arrivée après la plage fixe de l'après-midi. Cas imprévu."
+
+	soir = max(arrivee + pause + DUREE_JOUR, FINPLGFIXAPRM)
+
+	if soir == FINPLGFIXAPRM:
 		depart = _conversion_heures(soir) + \
 						" (" + _compute_gain(arrivee, pause, soir) + ")"
 	else:
@@ -301,11 +339,12 @@ def _extracted_from_traitement(tabminutes, pause):
 
 	if len(tabminutes) > 1:
 		soir = _conversion_minutes(now_h, now_m)
-		print("En partant maintenant ->", _compute_gain(arrivee, pause, soir))
+		print("En partant maintenant ->", _compute_gain(arrivee, pause, soir,
+                                                  	nbrbageage))
 
 	return f"depart min : {depart}"
 
-def _compute_gain(arrivee: int, pause: int, depart: int) -> str:
+def _compute_gain(arrivee: int, pause: int, depart: int, nbrbageage=0) -> str:
 	"""
 	calcul du gain (ou perte) total sur la journée
 	inclus le non dépassement de 10h max sur une journée
@@ -314,21 +353,24 @@ def _compute_gain(arrivee: int, pause: int, depart: int) -> str:
 		heure d'arrivee (entier, minutes)
 		durée pause (entier, minutes)
 		heure départ (entier, minutes)
+		nbrbageage (entier)
 
 	[ EN SORTIE ]
-		chaine décrivant le gain/perte de la journée (str)
+		sretour (chaine) gain/perte de la journée
 	"""
-	jmax = 10 * 60
-	fixemat = (11 * 60 )+ 30
-	if depart < fixemat:
+	if nbrbageage == 1 and arrivee >= FINPLGFIXMAT:
+		# cas imprevu pour ce calcul
+		return ""
+
+	if nbrbageage == 1 and depart <= FINPLGFIXMAT:
 		duree = depart - arrivee
 	else:
 		duree = depart - (arrivee + pause)
   
-	gain = max((DUREE_JOUR - duree), (DUREE_JOUR - jmax))
+	gain = max((DUREE_JOUR - duree), (DUREE_JOUR - DUREEJMAX))
 
 	if gain < 0:
-		result = "gain" if duree < jmax else "gain (max)"
+		result = "gain" if duree < DUREEJMAX else "gain (max)"
 		gain *= -1
 	else:
 		result = "perte"

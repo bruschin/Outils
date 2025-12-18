@@ -141,7 +141,7 @@ stages:
   - test
   # - quality
   - sca
-  - build
+  # - build
   - deploy
 
 # Retry a job automatically if it fails (2 times)
@@ -249,7 +249,7 @@ job:Packaging:
     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
     - devtools/lanceur_build.bash || true
     - mv rapports/*txt public/ || true
-    - ls -ail build/*
+    - ls -ail build/* || true
   artifacts:
     paths:
       - public
