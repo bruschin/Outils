@@ -184,7 +184,7 @@ job:Tests:
     - echo -e "${TXT_RED}script test${TXT_CLEAR}"
     - echo -e "${TXT_YELLOW}Stage test en version = ${VERSION}${TXT_CLEAR}" || true
     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-    - devtools/lanceur_pytest.bash "$VERSION" || true
+    - devtools/lanceur_pytest.bash "${VERSION}" || true
     - ls -ail rapports/*
     - mv -f rapports/htmlcov public/ || true
     - mv rapports/coverage* public/ || true
@@ -226,6 +226,8 @@ job:CheckDependencies:
     key: cache-$CI_COMMIT_REF_SLUG
     paths:
       - public/
+  before_script:
+    - cd "$CI_PROJECT_DIR"
   script:
     - echo -e "${TXT_RED}script sca${TXT_CLEAR}"
   allow_failure: true

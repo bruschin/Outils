@@ -1,4 +1,4 @@
-Documentation du projet listem3u
+Documentation du projet Pegase
 ================================
 
 -   ``Branche`` : |version| 🦄
@@ -19,7 +19,7 @@ Documentation du projet listem3u
 + 🦁 Lien vers `le fichier xml généré avec pytest </listem3u/coverage1.xml>`_. 🦁
 + 🦁 Lien vers `le fichier xml généré avec tox </listem3u/coverage2.xml>`_. 🦁
 + 🚩 Test syntaxe :Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
-+ 🏁 wiki : git clone https://github.com/bruschin/listem3u/wiki
++ 🏁 wiki : git clone https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git
 
 
 
@@ -30,7 +30,7 @@ Essai usage graphviz
 
     "bar" -> "baz" -> "quux";
 
-Les modules du projet listem3u
+Les modules du projet pegase
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
