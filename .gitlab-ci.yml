@@ -54,6 +54,7 @@ workflow:
   - export TXT_RED="\e[31m" && TXT_CLEAR="\e[0m"
   - export TXT_YELLOW="\e[33m"
   - cd "$CI_PROJECT_DIR"
+  - mkdir public || true
 
 .gestion_env_python_before: &gestion_env_python_before
   - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
