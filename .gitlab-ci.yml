@@ -39,29 +39,26 @@ workflow:
       when: always
 
 # https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html 
-.some-actions-before: &some-actions-before
+.some-actions-apt-before: &some-actions-apt-before
   - apt-get update || true
+  - apt-get upgrade -y || true
   - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov dia 
       doxygen curl build-essential zlib1g-dev libffi-dev || true 
   - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
-      tk-dev libssl-dev liblzma-dev || true
+      tk-dev libssl-dev liblzma-dev python3-sphinx  make || true
+  - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+  - update-ca-certificates -f
 
-before_script:
-  # Normalize package name once at the start of any job
+.some_mise_en_forme_before: &some_mise_en_forme_before
   - export NORMALIZED_NAME=$(echo "${CI_PROJECT_NAME}" | tr '-' '_') || true
   - export TXT_RED="\e[31m" && TXT_CLEAR="\e[0m"
   - export TXT_YELLOW="\e[33m"
-  # Use Météo-France's own PyPI-like registry, more info at
-  # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
-  
-  - *some-actions-before
-  
   - cd "$CI_PROJECT_DIR"
 
+.gestion_env_python_before: &gestion_env_python_before
   - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
-
   - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
   - git config --global http.sslVerify false
   - git config --global https.sslVerify false
@@ -69,11 +66,10 @@ before_script:
   - set GIT_SSL_NO_VERIFY
   - echo "proxy = http://proxy.meteo.fr:11011" > $HOME/.curlrc
   - echo "insecure" >> $HOME/.curlrc
-  - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
-  - update-ca-certificates -f
 
+.gestion_pyenv: &gestion_pyenv
   - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
-  # - curl -kfsSL https://pyenv.run | bash || true
+    # - curl -kfsSL https://pyenv.run | bash || true
   - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
   - export PATH="$PYENV_ROOT/bin:$PATH"
@@ -90,6 +86,8 @@ before_script:
   - pyenv install 3.12.12 || true
   - pyenv global 3.10 3.11 3.12
 
+.gestion_pip_nexus: &gestion_pip_nexus
+
   - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
   - pip config set global.trusted-host nexus-sidev.meteo.fr || true
   - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
@@ -98,6 +96,22 @@ before_script:
   - python3 -m pip install pylint-common --use-pep517
   - pip install -r docs/requirements.txt --root-user-action=ignore || true
   - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
+
+before_script:
+  # Normalize package name once at the start of any job
+  
+  # Use Météo-France's own PyPI-like registry, more info at
+  # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
+  
+  - *some-actions-apt-before
+  - *some_mise_en_forme_before
+  - *gestion_env_python_before
+  - *gestion_pyenv
+  - *gestion_pip_nexus
+  
+  
+
+  
   #https://misc.flogisoft.com/bash/tip_colors_and_formatting
   
 
@@ -251,11 +265,6 @@ job:Deploy:
       policy: pull
   script:
     - echo -e "${TXT_RED}script deploy${TXT_CLEAR}"
-    - apt update || true
-    - apt upgrade -y || true
-    - apt install -y make doxygen graphviz || true
-    - apt install -y python3-sphinx || true
-      #- pip install -r devtools/requirements.txt
     - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
     - devtools/lanceur_doxygen.bash || true
     - devtools/lanceur_sphinx.bash || true
