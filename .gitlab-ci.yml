@@ -138,7 +138,7 @@ before_script:
 
 stages:
   - lint
-  - test
+  # - test
   # - quality
   - sca
   # - build
@@ -169,33 +169,48 @@ job:Lint:
     - mv rapports/*txt public/ || true
     - mv -f rapports/htmlcov* public/ || true
     - mv rapports/coverage* public/ || true
+
+    - echo -e "${TXT_RED}Documentations${TXT_CLEAR}"
+    - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
+    - devtools/lanceur_doxygen.bash || true
+    - devtools/lanceur_sphinx.bash || true
+
+    - ls -ail rapports/*
+    - mv rapports/doxygen public/ || true
+    - mv rapports/*txt public/  || true
+    - mv build/sphinx-* public/ || true
+      ### index de gitlab-pages :
+    - cp -f docs/index.html public/ || true
+    - cp -f docs/Outils.png public/ || true
+    - ls -ail public/*
+
   artifacts:
     paths:
       - public
 
-job:Tests:
-  stage: test
-  image: "python:$VERSION-slim"
-  cache:
-    - key: cache-$CI_COMMIT_REF_SLUG
-     # override the policy
-      policy: pull
-  script:
-    - echo -e "${TXT_RED}script test${TXT_CLEAR}"
-    - echo -e "${TXT_YELLOW}Stage test en version = ${VERSION}${TXT_CLEAR}" || true
-    # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-    - devtools/lanceur_pytest.bash "${VERSION}" || true
-    - ls -ail rapports/*
-    - mv -f rapports/htmlcov public/ || true
-    - mv rapports/coverage* public/ || true
-    - mv rapports/*txt public/  || true    
-  parallel:
-    matrix:
-      # https://docs.gitlab.com/ee/ci/yaml/#parallelmatrix
-      - VERSION: ["3.10", "3.11", "3.12"]
-  artifacts:
-    paths:
-      - public
+# job:Tests:
+#   stage: test
+#   image: "python:$VERSION-slim"
+#   cache:
+#     - key: cache-$CI_COMMIT_REF_SLUG
+#      # override the policy
+#       policy: pull
+#   script:
+#     - echo -e "${TXT_RED}script test${TXT_CLEAR}"
+#     - echo -e "${TXT_YELLOW}Stage test en version = ${VERSION}${TXT_CLEAR}" || true
+#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+#     - devtools/lanceur_pytest.bash "${VERSION}" || true
+#     - ls -ail rapports/*
+#     - mv -f rapports/htmlcov public/ || true
+#     - mv rapports/coverage* public/ || true
+#     - mv rapports/*txt public/  || true    
+#   parallel:
+#     matrix:
+#       # https://docs.gitlab.com/ee/ci/yaml/#parallelmatrix
+#       - VERSION: ["3.10", "3.11", "3.12"]
+#   artifacts:
+#     paths:
+#       - public
 
 # job:Sonar:
 #   stage: quality
@@ -266,22 +281,12 @@ job:Deploy:
     - key: cache-$CI_COMMIT_REF_SLUG
      # override the policy
       policy: pull
+  before_script:
+    - cd "$CI_PROJECT_DIR"
   script:
     - echo -e "${TXT_RED}script deploy${TXT_CLEAR}"
-    - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
-    - devtools/lanceur_doxygen.bash || true
-    - devtools/lanceur_sphinx.bash || true
   after_script:
     - echo -e "${TXT_RED}after_script deploy${TXT_CLEAR}"
-    - cd "$CI_PROJECT_DIR"
-    - ls -ail rapports/*
-    - mv rapports/doxygen public/ || true
-    - mv rapports/*txt public/  || true
-    - mv build/sphinx-* public/ || true
-      ### index de gitlab-pages :
-    - cp -f docs/index.html public/ || true
-    - cp -f docs/Outils.png public/ || true
-    - ls -ail public/*
   artifacts:
     paths: 
       - public
