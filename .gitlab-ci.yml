@@ -236,26 +236,26 @@ job:CheckDependencies:
     paths:
       - public
 
-job:Packaging:
-  stage: build
-  #image: "python:3.12-slim"
-  cache:
-    policy: pull
-    key: cache-$CI_COMMIT_REF_SLUG
-    paths:
-      - public/
-  script:
-    - echo -e "${TXT_RED}script build${TXT_CLEAR}"
-    # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-    - devtools/lanceur_build.bash || true
-    - mv rapports/*txt public/ || true
-    - ls -ail build/* || true
-  artifacts:
-    paths:
-      - public
-      - build
-  only:
-    - main
+# job:Packaging:
+#   stage: build
+#   #image: "python:3.12-slim"
+#   cache:
+#     policy: pull
+#     key: cache-$CI_COMMIT_REF_SLUG
+#     paths:
+#       - public/
+#   script:
+#     - echo -e "${TXT_RED}script build${TXT_CLEAR}"
+#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+#     - devtools/lanceur_build.bash || true
+#     - mv rapports/*txt public/ || true
+#     - ls -ail build/* || true
+#   artifacts:
+#     paths:
+#       - public
+#       - build
+#   only:
+#     - main
 
 job:Deploy:
   stage: deploy
