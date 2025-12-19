@@ -17,15 +17,16 @@ Essai usage graphviz
 
 .. digraph:: foo
 
-    "bar" -> "baz" -> "quux";
+    "parametres" -> "gestion_parametre" -> "traitement";
 
 Les modules du projet pegase
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
+    :maxdepth: 3
+    :caption: Contents:
 
     pegase
-    modules
 
 ------
 Tables

@@ -2,45 +2,47 @@
 # -*- encoding: utf-8 -*-
 # pylint: disable=too-many-branches
 """
-  Created on 14 mars 2023
+Created on 14 mars 2023
 
-  @author: Nicolas Bruschi
+@author: Nicolas Bruschi
 
-  Calcule l'heure de départ minimale theorique pour effectuer obligation de
-  7h24 de travail effectif d'apres renseignement de 1 à 4 badgeages de type
-  xxhmm exemple 9:24 ou 09h24 ou 13H56 (le h ou : central accepte la casse
-  min/maj). Pour renseigner une séquence de 3 badgeage copie/colle sur
-  pegaseweb:  09:33 - 12:09 - 12:35
+Calcule l'heure de départ minimale theorique pour effectuer obligation de
+7h24 de travail effectif d'apres renseignement de 1 à 4 badgeages de type
+xxhmm exemple 9:24 ou 09h24 ou 13H56 (le h ou : central accepte la casse
+min/maj). Pour renseigner une séquence de 3 badgeage copie/colle sur
+pegaseweb:  09:33 - 12:09 - 12:35
 
-  Nota bene : le systeme pivot par défaut pris en compte est celui de 37h/5j.
-  Pour adapter ce systeme pivot à son cas , il convient de modifier en dur
-  dans ce script la valeur de la variable globale DUREE_JOUR. Exemple:
-  38h30 / 5j : (38*60 +30)/5 = 462 = 7*60 + 42 = Obligation quotidienne 7h42.
+Nota bene : le systeme pivot par défaut pris en compte est celui de 37h/5j.
+Pour adapter ce systeme pivot à son cas , il convient de modifier en dur
+dans ce script la valeur de la variable globale DUREE_JOUR. Exemple:
+38h30 / 5j : (38*60 +30)/5 = 462 = 7*60 + 42 = Obligation quotidienne 7h42.
 
-  [ EN ENTREE ]
-
-    1 ou 4 arguments de type chaine = xxhmm ou xHmm
+[ENTREE]
+  badgeage (chaine) 1 à 4 arguments => xxhmm ou xHmm.
     exemple 9h24 ou 09:24 ou 13H56 (:,h central accepte la casse min/maj)
     Si un seul arg on appliquera automatiquement une pause midi obligatoire
     de 45 minutes
     Si 3 ou 4 arg, séparés par (-, ou /) la durée entre arg 2 et arg 3 est la
     duree de la pause meridienne ne pouvant etre inf a 45 minutes.
 
-  [ EN SORTIE ]
+[SORTIE]
+  code (int) 
+    0 ou 1 avec affichage raison Pb.
 
-    0   OK => Affichage de l'heure du depart calcule ex: DEPART : 17H19
-    1   KO Arguments appel incorrects ou en nombre incorrect.
-        => Affichage raison pb.
-
-  [ VERSIONS ]
-
-    [2023-03-14] BN V1.0 : Initialisation
-    [2023-04-09] BN V1.1 : Test unitaires + gestion param aide + version
-    [2023-04-13] BN V1.2 : Test unitaires + corretion bug _conversion_heures
-                          %02d prise en compte 1 ou 3 badgeages => 1 ou 2 ou 3.
-    [2024-09-11] BN V1.3 : Ajout calcul systeme pivot autre que 37h5j
-    [2025-12-17] CA V1.4.1 : Ajout calcul gain bilan + gestion 4 badgeages
-    [2025-12-18] BN V1.4.2 : Gestion départ avec 1 ou 2 badgeages
+[VERSIONS]
+  + [2023-03-14] BN V1.0
+      Initialisation.
+  + [2023-04-09] BN V1.1
+      Tests unitaires + gestion param aide + version.
+  + [2023-04-13] BN V1.2
+      Tests unitaires + corretion bug _conversion_heures
+      %02d prise en compte 1 ou 3 badgeages => 1 , 2 ou 3.
+  + [2024-09-11] BN V1.3
+      Ajout calcul systeme pivot autre que 37h5j.
+  + [2025-12-17] CA V1.4.1
+      Ajout calcul gain bilan + gestion 4 badgeages.
+  + [2025-12-18] BN V1.4.2
+      Gestion départ avec 1 ou 2 badgeages.
 
 """
 
@@ -79,19 +81,19 @@ HEUREMAXDEP = 20 * 20  # pas au delà de 20h00
 
 
 def parametres(argv):
-  """Gestion des parametres d'appel = help et version
+  """
+  Gestion des parametres d'appel = help et version
 
-  Args:
-    argv (list) Les parametres d'appel du script.
+  [ENTREE]
+    - argv (list) Les parametres d'appel du script
 
-  Returns:
-    coderetour (int) 0 OK =>  Affichage : aide usage ou version
-                     1 KO =>  arguments appel incorrects ou en nombre
-                              incorrect.
-                     2    =>  parametres ne contiennent pas de
-                              demande d'aide ou de version on sort et
-                              continue.
-    scom (chaine) commentaire =>  Affichage raison d'un Pb.
+  [SORTIE]
+    - coderetour (int)
+
+        + 0 OK =>  Affichage : aide usage ou version
+        + 1 KO =>  arguments appel incorrects ou en nombre incorrect.
+        + 2    =>  Ni demande aide et version on continue.
+    - scom (chaine) commentaire. Affichage raison d'un Pb.
 
 """
   scom = ""
@@ -138,13 +140,13 @@ def gestion_parametre(*args):
   """
   Gestion des parametres d'appel
   
-  Args:
-    *args (list) Les parametres d'appel du script (filtrés du nom du script).
+  [ENTREE]
+    - args (list) Les parametres d'appel du script (filtrés du nom du script).
 
-  Returns:
-    bretour (int) 0 ou 1.
-    scom (chaine) commentaire.
-    minutesici (tableau int) minutes calculées.
+  [SORTIE]
+    - bretour (int) 0 ou 1.
+    - scom (str) commentaire.
+    - minutesici (tableau int) minutes calculées.
   
   """
 
@@ -197,14 +199,12 @@ def traitement(tabminutes):
   """
   affichage finale selon nombre de badgeages recupérés.
 
-  Args:
+  [ENTREE]
+    - tabminutes (tableau int).
 
-    tabminutes (tableau int).
-
-  Returns:
-
-    bret = 0 OK ou 1 KO.
-    scom (chaine) commentaire.
+  [SORTIE]
+    - bret = 0 OK ou 1 KO.
+    - scom (chaine) commentaire.
   
   """
   bret = 0
@@ -247,18 +247,16 @@ def traitement(tabminutes):
 
 def _est_un_badgeage_valide(ch_trav, conversion):
   """
-  la liste non vide traitée est-elle un badgeage ?
+  La liste non vide traitée est-elle un badgeage ?
 
-  Args:
+  [ENTREE]
+    - ch_trav (chaine) badgeage.
+    - conversion (tableau d'entier) badgeage hh:mm converti en minute.
 
-    ch_trav (chaine) badgeage.
-    conversion (tableau d'entier) badgeage hh:mm converti en minute.
-
-  Returns:
-
-    ret (int) 0 ou 1.
-    som (chaine) commentaire.
-    conversion (tableau d'entier) avec ce badgeage converti en plus.
+  [SORTIE]
+    - ret (int) 0 ou 1.
+    - som (chaine) commentaire.
+    - conversion (tableau d'entier) avec ce badgeage converti en plus.
   
   """
   # la chaine de la liste de bonne longueur est-elle un badgeage ?
@@ -284,16 +282,15 @@ def _est_un_badgeage_valide(ch_trav, conversion):
 
 
 def _duree_pause_unbadgeage(desminutes):
-  """Calcule la pause selon 1 seul badgeage dans la plage fin matin debut aprm
-     hors plage meridienne => diff 14h - 11h30 = 150 minutes
+  """
+  Calcule la pause selon 1 seul badgeage dans la plage fin matin debut aprm
+  hors plage meridienne => diff 14h - 11h30 = 150 minutes
 
-  Args:
+  [ENTREE]
+    - desminutes (_type_): _description_.
 
-    desminutes (_type_): _description_.
-
-  Returns:
-
-    duree (entier) minutes.
+  [SORTIE]
+    - duree (entier) minutes.
   
   """
   duree = 150
@@ -308,14 +305,12 @@ def _conversion_minutes(desheures, desminutes):
   Conversion heures et minutes passe en appel (de type hh et mm)
   en un entier = minutes
 
-  Args:
+  [ENTREE]
+    - desheures (entier) 09 converti en 9.
+    - desminutes (entier).
 
-    desheures (entier) 09 converti en 9.
-    desminutes (entier).
-
-  Returns:
-
-    minutes : entier exemple 9*60 + 15 = 555.
+  [SORTIE]
+    - minutes : entier exemple 9*60 + 15 = 555.
 
   """
   return (60 * desheures) + desminutes
@@ -325,13 +320,11 @@ def _conversion_heures(desminutes):
   """
   Conversion des minutes en xHmm ( 542 -> 09h02 et non pas 9H2)
 
-  Args:
+  [ENTREE]
+    - desminutes (entier).
 
-    desminutes (entier).
-
-  Returns:
-
-    ch_conv_retour (chaine) formatee.
+  [SORTIE]
+    - ch_conv_retour (chaine) formatee.
   
   """
   # Variables locales
@@ -349,15 +342,13 @@ def _extracted_from_traitement(tabminutes, pause, nbrbageage=0):
   """
   extraction de code dupliqué dans la fonction traitement
 
-  Args:
+  [ENTREE]
+    - tabminutes (tableau d'entier).
+    - pause (entier).
+    - nbrbageage (entier).
 
-    tabminutes (tableau d'entier).
-    pause (entier).
-    nbrbageage (entier).
-
-  Returns:
-
-    ch_conv_retour (chaine) formatee.
+  [SORTIE]
+    - ch_conv_retour (chaine) formatee.
   
   """
   arrivee = tabminutes[0]
@@ -392,16 +383,14 @@ def _compute_gain(arrivee: int, pause: int, depart: int, nbrbageage=0) -> str:
   calcul du gain (ou perte) total sur la journée
   inclus le non dépassement de 10h max sur une journée
 
-  Args:
+  [ENTREE]
+    - heure d'arrivee (entier, minutes).
+    - durée pause (entier, minutes).
+    - heure départ (entier, minutes).
+    - nbrbageage (entier)
 
-    heure d'arrivee (entier, minutes).
-    durée pause (entier, minutes).
-    heure départ (entier, minutes).
-    nbrbageage (entier)
-
-  Returns:
-
-    sretour (chaine) gain/perte de la journée.
+  [SORTIE]
+    - sretour (chaine) gain/perte de la journée.
   
   """
   if nbrbageage == 1 and arrivee >= FINPLGFIXMAT:
