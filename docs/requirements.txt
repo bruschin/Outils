@@ -18,6 +18,7 @@ sphinxcontrib-serializinghtml
 sphinx-multiversion
 sphinx-rtd-theme
 gitpython
+tox
 pytest
 pytest-cov
 pytest-xdist
