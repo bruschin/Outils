@@ -5,6 +5,7 @@ tox
 pylint
 pytest
 coverage
+gitpython
 pydata-sphinx-theme
 Sphinx
 sphinx-book-theme

@@ -46,7 +46,7 @@ workflow:
       doxygen curl build-essential zlib1g-dev libffi-dev tk-dev|| true 
   - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
       libssl-dev liblzma-dev python3-sphinx make || true
-  - apt-get install -y  python3-sphinx-copybutton sphinx-common 
+  - apt-get install -y  python3-sphinx-copybutton sphinx-common
       python3-pydata-sphinx-theme python3-alabaster || true
   - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
   - update-ca-certificates -f

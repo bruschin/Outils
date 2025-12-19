@@ -39,7 +39,7 @@ done
         make -C docs clean
         echo "### INFO: Building html for french language ###"
 
-        /usr/bin/sphinx-build -a -v -c docs -b html docs build/sphinx-html
+        sphinx-build -a -v -c docs -b html docs build/sphinx-html
         #echo "### INFO: Building epub for french language ###"
         #sphinx-build -a -v -c docs -b epub docs build/sphinx-epub
 )
