@@ -249,21 +249,21 @@ for version in versions:
 # today_fmt = "%B %d, %Y"
 
 # settings for EPUB
-epub_basename = f'{project}-docs_{current_language}_{current_version}'
+#epub_basename = f'{project}-docs_{current_language}_{current_version}'
 
-html_context['downloads'] = []
+#html_context['downloads'] = []
 # html_context['downloads'].append( ('pdf', '/' +REPO_NAME+ '/' + \
 #   current_language+ '/' +current_version+ '/' +project+ '-docs_' + \
 #   current_language+ '_' +current_version+ '.pdf') )
 
-html_context['downloads'].append( ( 'epub',
-                                    f'{REPO_NAME}/epub/{epub_basename}.epub') )
+#html_context['downloads'].append( ( 'epub',
+#                                    f'{REPO_NAME}/epub/{epub_basename}.epub') )
 
 ##########################
 # "EDIT ON GITHUB" LINKS #
 ##########################
 
-html_context['display_github'] = True
-html_context['github_user'] = 'maltfield'
-html_context['github_repo'] = 'rtd-github-pages'
-html_context['github_version'] = 'master/docs/'
+#html_context['display_github'] = True
+#html_context['github_user'] = 'maltfield'
+#html_context['github_repo'] = 'rtd-github-pages'
+#html_context['github_version'] = 'master/docs/'
