@@ -81,18 +81,17 @@ HEUREMAXDEP = 20 * 20  # pas au delà de 20h00
 def parametres(argv):
   """Gestion des parametres d'appel = help et version
 
-  :param argv: Les parametres d'appel du script
-  :type argv: list
+  Args:
+    argv (list) Les parametres d'appel du script.
 
-  :return coderetour: 0 OK =>  Affichage : aide usage ou version
-                      1 KO =>  arguments appel incorrects ou en nombre
+  Returns:
+    coderetour (int) 0 OK =>  Affichage : aide usage ou version
+                     1 KO =>  arguments appel incorrects ou en nombre
                               incorrect.
-                      2    =>  parametres ne contiennent pas de
-                               demande d'aide ou de version on sort et
-                               continue
-  :type coderetour: entier
-  :return scom: commentaire =>  Affichage raison d'un Pb
-  :rtype scom: chaine
+                     2    =>  parametres ne contiennent pas de
+                              demande d'aide ou de version on sort et
+                              continue.
+    scom (chaine) commentaire =>  Affichage raison d'un Pb.
 
 """
   scom = ""
@@ -139,15 +138,13 @@ def gestion_parametre(*args):
   """
   Gestion des parametres d'appel
   
-  :param args: Tous les parametres d'appel du script (filtrés du nom du script)
-  :type args: list
+  Args:
+    *args (list) Les parametres d'appel du script (filtrés du nom du script).
 
-  :return bretour: 0 ou 1
-  :rtype bretour: entier
-  :return scom: commentaire
-  :rtype scom: chaine
-  :return minutesici: minutes calculées.
-  :rtype minutesici: tableau d'entiers  
+  Returns:
+    bretour (int) 0 ou 1.
+    scom (chaine) commentaire.
+    minutesici (tableau int) minutes calculées.
   
   """
 
@@ -202,12 +199,12 @@ def traitement(tabminutes):
 
   Args:
 
-    tabminutes (tableau d'entier)
+    tabminutes (tableau int).
 
   Returns:
 
-    bret = 0 OK ou 1 KO
-    scom (chaine)
+    bret = 0 OK ou 1 KO.
+    scom (chaine) commentaire.
   
   """
   bret = 0
@@ -254,14 +251,14 @@ def _est_un_badgeage_valide(ch_trav, conversion):
 
   Args:
 
-    ch_trav (chaine) badgeage ?
-    conversion (tableau d'entier) badgeage hh:mm converti en minute
+    ch_trav (chaine) badgeage.
+    conversion (tableau d'entier) badgeage hh:mm converti en minute.
 
   Returns:
 
-    ret (int) 0 ou 1
-    som (chaine) commentaire
-    conversion (tableau d'entier) avec ce badgeage en plus
+    ret (int) 0 ou 1.
+    som (chaine) commentaire.
+    conversion (tableau d'entier) avec ce badgeage converti en plus.
   
   """
   # la chaine de la liste de bonne longueur est-elle un badgeage ?
@@ -292,11 +289,11 @@ def _duree_pause_unbadgeage(desminutes):
 
   Args:
 
-    desminutes (_type_): _description_
+    desminutes (_type_): _description_.
 
   Returns:
 
-    duree (entier) minutes
+    duree (entier) minutes.
   
   """
   duree = 150
@@ -313,12 +310,12 @@ def _conversion_minutes(desheures, desminutes):
 
   Args:
 
-    desheures (entier) 09 converti en 9
-    desminutes (entier)
+    desheures (entier) 09 converti en 9.
+    desminutes (entier).
 
   Returns:
 
-    minutes : entier exemple 9*60 + 15 = 555
+    minutes : entier exemple 9*60 + 15 = 555.
 
   """
   return (60 * desheures) + desminutes
@@ -330,11 +327,11 @@ def _conversion_heures(desminutes):
 
   Args:
 
-    desminutes (entier)
+    desminutes (entier).
 
   Returns:
 
-    ch_conv_retour (chaine) formatee
+    ch_conv_retour (chaine) formatee.
   
   """
   # Variables locales
@@ -354,13 +351,13 @@ def _extracted_from_traitement(tabminutes, pause, nbrbageage=0):
 
   Args:
 
-    tabminutes (tableau d'entier)
-    pause (entier)
-    nbrbageage (entier)
+    tabminutes (tableau d'entier).
+    pause (entier).
+    nbrbageage (entier).
 
   Returns:
 
-    ch_conv_retour (chaine) formatee
+    ch_conv_retour (chaine) formatee.
   
   """
   arrivee = tabminutes[0]
@@ -397,14 +394,14 @@ def _compute_gain(arrivee: int, pause: int, depart: int, nbrbageage=0) -> str:
 
   Args:
 
-    heure d'arrivee (entier, minutes)
-    durée pause (entier, minutes)
-    heure départ (entier, minutes)
+    heure d'arrivee (entier, minutes).
+    durée pause (entier, minutes).
+    heure départ (entier, minutes).
     nbrbageage (entier)
 
   Returns:
 
-    sretour (chaine) gain/perte de la journée
+    sretour (chaine) gain/perte de la journée.
   
   """
   if nbrbageage == 1 and arrivee >= FINPLGFIXMAT:
