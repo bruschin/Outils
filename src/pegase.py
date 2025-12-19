@@ -82,9 +82,7 @@ def parametres(argv):
   """_
   Gestion des parametres d'appel = help et version
 
-  Args:
-
-    argv = Les parametres d'appel du script
+  :param argv: Les parametres d'appel du script
 
   Returns:
 
