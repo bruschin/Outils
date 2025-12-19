@@ -26,7 +26,8 @@ exec >"${FICSORTIE}" 2>&1
 echo "$0 : Génération documentation par sphinx des scripts python sous src"
 
 #précautions répertoires sous build
-reps_utils="build/sphinx-html build/sphinx-epub build/.doctrees build/_static"
+reps_utils="build/sphinx-html build/sphinx-epub build/.doctrees 
+  build/_static docs/locales docs/_static"
 for direct in ${reps_utils}; do
   if ! test -d "${direct}"; then
     mkdir -p "${direct}" 2>/dev/null || true

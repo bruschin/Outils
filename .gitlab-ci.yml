@@ -43,9 +43,9 @@ workflow:
   - apt-get update || true
   - apt-get upgrade -y || true
   - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov dia 
-      doxygen curl build-essential zlib1g-dev libffi-dev || true 
+      doxygen curl build-essential zlib1g-dev libffi-dev tk-dev|| true 
   - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
-      tk-dev libssl-dev liblzma-dev python3-sphinx  make || true
+      libssl-dev liblzma-dev python3-sphinx make || true
   - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
   - update-ca-certificates -f
 
@@ -106,7 +106,7 @@ before_script:
   
   - *some-actions-apt-before
   - *some_mise_en_forme_before
-  - *gestion_env_python_before
+  #- *gestion_env_python_before
   - *gestion_pyenv
   - *gestion_pip_nexus
   

@@ -17,7 +17,7 @@
   dans ce script la valeur de la variable globale DUREE_JOUR. Exemple:
   38h30 / 5j : (38*60 +30)/5 = 462 = 7*60 + 42 = Obligation quotidienne 7h42.
 
-  Args:
+  [ EN ENTREE ]
 
     1 ou 4 arguments de type chaine = xxhmm ou xHmm
     exemple 9h24 ou 09:24 ou 13H56 (:,h central accepte la casse min/maj)
@@ -26,13 +26,14 @@
     Si 3 ou 4 arg, séparés par (-, ou /) la durée entre arg 2 et arg 3 est la
     duree de la pause meridienne ne pouvant etre inf a 45 minutes.
 
-  Returns:
+  [ EN SORTIE ]
 
     0   OK => Affichage de l'heure du depart calcule ex: DEPART : 17H19
     1   KO Arguments appel incorrects ou en nombre incorrect.
         => Affichage raison pb.
 
-  VERSIONS
+  [ VERSIONS ]
+
     [2023-03-14] BN V1.0 : Initialisation
     [2023-04-09] BN V1.1 : Test unitaires + gestion param aide + version
     [2023-04-13] BN V1.2 : Test unitaires + corretion bug _conversion_heures
@@ -40,6 +41,7 @@
     [2024-09-11] BN V1.3 : Ajout calcul systeme pivot autre que 37h5j
     [2025-12-17] CA V1.4.1 : Ajout calcul gain bilan + gestion 4 badgeages
     [2025-12-18] BN V1.4.2 : Gestion départ avec 1 ou 2 badgeages
+
 """
 
 ## Bibliotheques ##
@@ -95,6 +97,7 @@ def parametres(argv):
                       continue
     scom (chaine)			commentaire
                   =>  Affichage raison Pb
+
 """
   scom = ""
   coderetour = 2
@@ -150,7 +153,8 @@ def gestion_parametre(*args):
     bretour (int)  0 ou 1
     scom (chaine) commentaire
     minutesici (tableau d'entier) des minutes calculées.
-	"""
+	
+ """
 	# Variables locales:
 	####################
   bretour = 0
@@ -208,6 +212,7 @@ def traitement(tabminutes):
 
     bret = 0 OK ou 1 KO
     scom (chaine)
+  
   """
   bret = 0
   scom = ""
@@ -261,6 +266,7 @@ def _est_un_badgeage_valide(ch_trav, conversion):
     ret (int) 0 ou 1
     som (chaine) commentaire
     conversion (tableau d'entier) avec ce badgeage en plus
+  
   """
   # la chaine de la liste de bonne longueur est-elle un badgeage ?
   # separateur entre h et minute
@@ -295,6 +301,7 @@ def _duree_pause_unbadgeage(desminutes):
   Returns:
 
     duree (entier) minutes
+  
   """
   duree = 150
   if desminutes >= FINPLGFIXMAT and desminutes <= DEBPLGFIXAPRM:
@@ -332,6 +339,7 @@ def _conversion_heures(desminutes):
   Returns:
 
     ch_conv_retour (chaine) formatee
+  
   """
   # Variables locales
   lesheures = 0
@@ -357,6 +365,7 @@ def _extracted_from_traitement(tabminutes, pause, nbrbageage=0):
   Returns:
 
     ch_conv_retour (chaine) formatee
+  
   """
   arrivee = tabminutes[0]
 
@@ -400,6 +409,7 @@ def _compute_gain(arrivee: int, pause: int, depart: int, nbrbageage=0) -> str:
   Returns:
 
     sretour (chaine) gain/perte de la journée
+  
   """
   if nbrbageage == 1 and arrivee >= FINPLGFIXMAT:
     # cas imprevu pour ce calcul

@@ -26,6 +26,7 @@ exec >"${FICSORTIE}" 2>&1
 
 echo "$0 : Lanceur tox"
 
+# tox -c "${FICCONF}"
 tox -c "${FICCONF}" --recreate
 
 exec 1>&6 6>&-

@@ -13,15 +13,21 @@
 <meta  name="description" content="Menu Gitlab-pages" />
 <title>Outils pages (Version = @RELEASE_VERSION@ - @DATE@)</title>
 <link rel="ICON" href="Outils.png"/>
+<style type="TEXT/CSS">
+.colorize {text-align:left; background-color: rgb(214, 203, 139);
+  border: 3px solid rgb(24, 136, 48);}
+.colorize2 {text-align:left; background-color: rgb(95, 150, 63);
+  border: 3px solid rgb(62, 66, 1);}
+
+
+</style>
 </head>
 <body>
     <!--/* //NOSONAR */-->
 
 <!-- https://next.sonarqube.com/sonarqube/coding_rules?open=Web%3AS5256&rule_key=Web%3AS5256 -->
-<div style="text-align:left; background-color: rgb(214, 203, 139);
-border: 3px solid rgb(62, 66, 1);">
-<span style="text-align:left; background-color: rgb(214, 203, 139);
-opacity: 0.5;border: 3px solid rgb(62, 66, 1);"><table aria-hidden="true"><tr>
+<div class="colorize">
+<span class="colorize" style="opacity: 0.5;"><table aria-hidden="true"><tr>
 	<th id="logoOutils" rowspan ="5" style="vertical-align: middle;">&nbsp;<img src="Outils.png" 
 	style="width:48px;height:48px;border-style: none;vertical-align:middle;" 
 	alt="Outils Version = @RELEASE_VERSION@" 
@@ -68,8 +74,7 @@ width="48px"/> Projet Outils dans SonarQube</a></li>
 </ul>
 <br />
 
-<span style="text-align:left; background-color: rgb(214, 203, 139);
-border: 3px solid rgb(62, 66, 1);">Fichiers des Logs : </span><br />
+<span class="colorize2">Fichiers des Logs : </span><br />
 <ul>
 <li>🤡 <!-- <a href="build-rapport.txt" id="build" target="_blank" 
 title="Log packaging">Build</a></li> -->

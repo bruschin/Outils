@@ -1,27 +1,16 @@
-Documentation du projet Pegase
-================================
+Documentation Outil Pegase
+==========================
 
 -   ``Branche`` : |version| 🦄
     ``Release`` : |release| 🐮
     ``Mise à jour`` : |today| 🦏
 
-+ 👉 Test écriture d'un lien vers un `website externe`_.
-.. _website externe: http://sphinx-doc.org
-+ 👁 emoji `html`_.
-.. _html: https://dev.to/rodrigoodhin/list-of-emojis-hex-codes-35ma
-
-+ 🐯 Sonarqube : `du projet`_. 🐯
-.. _du projet: https://sonarcloud.io/project/overview?id=bruschin_listem3u
-
-+ 🐺 Lien vers `la couverture du code générée avec pytest </Outils/htmlcov/index.html>`_. 🐺
-+ 🐺 Lien vers `la couverture du code générée avec tox </outils/htmlcov2/index.html>`_. 🐺
-+ 🦁 Lien vers `la documentation du projet générée avec doxygen </listem3u/doxygen/html/index.html>`_. 🦁
-+ 🦁 Lien vers `le fichier xml généré avec pytest </listem3u/coverage1.xml>`_. 🦁
-+ 🦁 Lien vers `le fichier xml généré avec tox </listem3u/coverage2.xml>`_. 🦁
-+ 🚩 Test syntaxe :Since Pythagoras, we know that :math:`a^2 + b^2 = c^2`.
++ 🐺 Lien vers `la couverture du code générée avec pytest <htmlcov/index.html>`_. 🐺
++ 🐺 Lien vers `la couverture du code générée avec tox <tox_cov_html/index.html>`_. 🐺
++ 🦁 Lien vers `la documentation du projet générée avec doxygen <doxygen/index.html>`_. 🦁
++ 🦁 Lien vers `le fichier xml généré avec pytest <coverage1.xml>`_. 🦁
++ 🦁 Lien vers `le fichier xml généré avec tox <coverage2.xml>`_. 🦁
 + 🏁 wiki : git clone https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git
-
-
 
 Essai usage graphviz
 --------------------
@@ -34,8 +23,8 @@ Les modules du projet pegase
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. toctree::
-    :maxdepth: 2
 
+    pegase
     modules
 
 ------
