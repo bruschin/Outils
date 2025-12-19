@@ -106,8 +106,8 @@ before_script:
   
   - *some-actions-apt-before
   - *some_mise_en_forme_before
-  #- *gestion_env_python_before
-  - *gestion_pyenv
+  - *gestion_env_python_before
+  #- *gestion_pyenv
   - *gestion_pip_nexus
   
   

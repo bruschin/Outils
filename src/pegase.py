@@ -79,22 +79,20 @@ HEUREMAXDEP = 20 * 20  # pas au delà de 20h00
 
 
 def parametres(argv):
-  """_
-  Gestion des parametres d'appel = help et version
+  """Gestion des parametres d'appel = help et version
 
   :param argv: Les parametres d'appel du script
+  :type argv: list
 
-  Returns:
-
-    coderetour (int)    0 ou 1 ou 2
-      0       OK  =>  Affichage : aide usage ou version
-      1       KO  =>  arguments appel incorrects ou en nombre
-                      incorrect.
-      2           =>  parametres ne contiennent pas de
-                      demande d'aide ou de version on sort et
-                      continue
-    scom (chaine)			commentaire
-                  =>  Affichage raison Pb
+  :return coderetour: 0 OK =>  Affichage : aide usage ou version
+                      1 KO =>  arguments appel incorrects ou en nombre
+                              incorrect.
+                      2    =>  parametres ne contiennent pas de
+                               demande d'aide ou de version on sort et
+                               continue
+  :type coderetour: entier
+  :return scom: commentaire =>  Affichage raison d'un Pb
+  :rtype scom: chaine
 
 """
   scom = ""
@@ -139,20 +137,20 @@ def parametres(argv):
 
 def gestion_parametre(*args):
   """
-
   Gestion des parametres d'appel
+  
+  :param args: Tous les parametres d'appel du script (filtrés du nom du script)
+  :type args: list
 
-  Args:
+  :return bretour: 0 ou 1
+  :rtype bretour: entier
+  :return scom: commentaire
+  :rtype scom: chaine
+  :return minutesici: minutes calculées.
+  :rtype minutesici: tableau d'entiers  
+  
+  """
 
-    *args = Tous les parametres d'appel du script (filtrés du nom du script)
-
-  Returns:
-
-    bretour (int)  0 ou 1
-    scom (chaine) commentaire
-    minutesici (tableau d'entier) des minutes calculées.
-	
- """
 	# Variables locales:
 	####################
   bretour = 0
