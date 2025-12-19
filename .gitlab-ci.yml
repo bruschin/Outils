@@ -168,9 +168,7 @@ job:Lint:
 
     - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
     - ls -ail rapports/*
-    - mv rapports/*txt public/ || true
-    - mv -f rapports/htmlcov* public/ || true
-    - mv rapports/coverage* public/ || true
+    #- mv rapports/coverage* public/ || true
 
     - echo -e "${TXT_RED}Documentations${TXT_CLEAR}"
     - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
@@ -178,8 +176,11 @@ job:Lint:
     - devtools/lanceur_sphinx.bash || true
 
     - ls -ail rapports/*
+
+    - mv rapports/*txt public/ || true
+    - mv rapports/*xml public/ || true
+    - mv rapports/tox_cov_html public/ || true
     - mv rapports/doxygen public/ || true
-    - mv rapports/*txt public/  || true
     - mv build/sphinx-* public/ || true
       ### index de gitlab-pages :
     - cp -f docs/index.html public/ || true
