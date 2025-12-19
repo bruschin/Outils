@@ -1,11 +1,10 @@
-bluepy
 pip
 ruff
 tox
 pylint
 pytest
 coverage
-gitpython
+GitPython
 pydata-sphinx-theme
 Sphinx
 sphinx-book-theme
