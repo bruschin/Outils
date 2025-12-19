@@ -189,7 +189,7 @@ html_context['display_lower_left'] = True
 if 'REPO_NAME' in os.environ:
   REPO_NAME = os.environ['REPO_NAME']
 else:
-  REPO_NAME = 'https://bruschin.github.io/listem3u'
+  REPO_NAME = 'https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils'
 
 # # SET CURRENT_LANGUAGE
 # if 'current_language' in os.environ:
