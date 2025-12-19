@@ -301,7 +301,7 @@ def _duree_pause_unbadgeage(desminutes):
 
 
 def _conversion_minutes(desheures, desminutes):
-  """_
+  """
   Conversion heures et minutes passe en appel (de type hh et mm)
   en un entier = minutes
 

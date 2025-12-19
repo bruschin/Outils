@@ -27,6 +27,7 @@ Les modules du projet pegase
     :caption: Contents:
 
     pegase
+    readme_link
 
 ------
 Tables
