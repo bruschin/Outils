@@ -24,6 +24,7 @@ default:
     - key: cache-$CI_COMMIT_REF_SLUG
       paths:
         - .cache/pip
+        - .pyenv
         - public
       policy: pull-push
   artifacts:
@@ -96,6 +97,8 @@ workflow:
   - pip config set global.trusted-host nexus-sidev.meteo.fr || true
   - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
   - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
+
+.gestion_pip_update: &gestion_pip_update
   - python3 -m pip install --upgrade pip
   - python3 -m pip install pylint-common --use-pep517
   - pip install -r docs/requirements.txt --root-user-action=ignore || true
@@ -112,6 +115,7 @@ before_script:
   - *gestion_env_python_before
   - *gestion_pyenv
   - *gestion_pip_nexus
+  - *gestion_pip_update
   
 #https://misc.flogisoft.com/bash/tip_colors_and_formatting
   
@@ -141,7 +145,7 @@ stages:
   # - test
   # - quality
   - sca
-  # - build
+  - build
   - deploy
 
 # Retry a job automatically if it fails (2 times)
@@ -173,9 +177,6 @@ job:Lint:
     - devtools/lanceur_doxygen.bash || true
     - devtools/lanceur_sphinx.bash || true
 
-    - echo -e "${TXT_RED}Build${TXT_CLEAR}"
-    - devtools/lanceur_build.bash || true
-
     - ls -ail rapports/*
 
     - mv rapports/*txt public/ || true
@@ -191,7 +192,6 @@ job:Lint:
   artifacts:
     paths:
       - public
-      - build/dist
 
 # job:Tests:
 #   stage: test
@@ -258,26 +258,32 @@ job:CheckDependencies:
     paths:
       - public
 
-# job:Packaging:
-#   stage: build
-#   #image: "python:3.12-slim"
-#   cache:
-#     policy: pull
-#     key: cache-$CI_COMMIT_REF_SLUG
-#     paths:
-#       - public/
-#   script:
-#     - echo -e "${TXT_RED}script build${TXT_CLEAR}"
-#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-#     - devtools/lanceur_build.bash || true
-#     - mv rapports/*txt public/ || true
-#     - ls -ail build/* || true
-#   artifacts:
-#     paths:
-#       - public
-#       - build
-#   only:
-#     - main
+job:Packaging:
+  stage: build
+  #image: "python:3.12-slim"
+  cache:
+    policy: pull
+    key: cache-$CI_COMMIT_REF_SLUG
+    paths:
+      - public/
+  before_script:
+    - cd "$CI_PROJECT_DIR"   
+    - *gestion_env_python_before
+    - *gestion_pip_nexus
+    - *gestion_pip_update
+  script:
+    - echo -e "${TXT_RED}script build${TXT_CLEAR}"
+    # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+    - devtools/lanceur_build.bash || true
+    - ls -ail *
+    - mv rapports/*txt public/ || true
+    - ls -ail build/* || true
+  artifacts:
+    paths:
+      - public
+      - build/dist
+  only:
+    - main
 
 job:Deploy:
   stage: deploy
