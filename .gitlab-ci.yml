@@ -25,6 +25,7 @@ default:
       paths:
         - .cache/pip
         - .pyenv
+        - envdev
         - public
       policy: pull-push
   artifacts:
