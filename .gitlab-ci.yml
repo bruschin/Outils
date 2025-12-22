@@ -62,6 +62,7 @@ workflow:
 
 .gestion_env_python_before: &gestion_env_python_before
   - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
+  - apt-get update || true
   - apt-get install -y git || true
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
@@ -75,6 +76,7 @@ workflow:
 
 .gestion_pyenv: &gestion_pyenv
   - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
+  - apt-get update || true
   - apt-get install -y curl || true 
     # - curl -kfsSL https://pyenv.run | bash || true
   - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
