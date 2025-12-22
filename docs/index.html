@@ -14,16 +14,35 @@
 <title>Outils pages (Version = @RELEASE_VERSION@ - @DATE@)</title>
 <link rel="ICON" href="Outils.png"/>
 <style type="TEXT/CSS">
-.colorize1 {text-align:left; background-color: rgb(214, 203, 139);
-  border: 3px solid rgb(24, 136, 48);}
+.colorize {text-align:left; background-color: rgb(214, 203, 139);
+  border: 3px solid rgb(24, 136, 48);margin: 10px 10px 10px 10px;}
 .colorize2 {text-align:left; background-color: rgb(95, 150, 63);
-  border: 3px solid rgb(62, 66, 1);}
+  border: 3px solid rgb(62, 66, 1);margin: 10px 10px 10px 10px;}
+.mef1 {font-family: "Times New Roman",Verdana, Arial, helvetica, sans-serif;
+	background-color: #BFCDE7;border: 1px solid rgb(62, 66, 1);
+	margin: 10px 10px 10px 10px;}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+	border: 3px solid rgb(62, 66, 1);
+	margin: 10px 10px 10px 10px;
+	background-color: rgb(95, 150, 63);
+}
+/* https://stackoverflow.com/questions/68141663/table-with-css-grid */
+.box {
+  border-radius: 5px;
+  margin: 10px 10px 10px 10px;
+	background-color: rgb(95, 150, 63);
+}
+.row {
+    display: contents;
+}
 </style>
 </head>
 <body>
 	<!--/* //NOSONAR */-->
 	<!-- https://next.sonarqube.com/sonarqube/coding_rules?open=Web%3AS5256&rule_key=Web%3AS5256 -->
-<div class="colorize1"><span class="colorize1" style="opacity: 0.5;">
+<div class="colorize" style="opacity: 0.5;">
 	<table aria-hidden="true"><tr>
 	<th id="logoOutils" rowspan ="5" 
 		style="vertical-align: middle;">&nbsp;<img src="Outils.png" 
@@ -43,19 +62,18 @@
 	<th id="Outil_pipeline">&nbsp;Pipeline :&nbsp;</th>
 	<th id="Outil_Refpipeline">&nbsp;<a 
 	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/pipelines/@PIPELINE@" 
-	target="_blank">@PIPELINE@</a>&nbsp;</th></tr></table></span><br />
-	<span id="description"><p>Le projet python Outils, propose un fichier 
-		pegase.py qui calcule, l'heure de départ minimale theorique pour effectuer 
-		des obligations quotidiennes de 7h24 de travail effectif, d'apres le 
-		renseignement de 1 à 4 badgeages passés en paramètres d'appel. Badgeages de 
+	target="_blank">@PIPELINE@</a>&nbsp;</th></tr></table></div>
+	<div class="mef1" id="description">&nbsp;&nbsp;Le projet python <b>"Outil Pegase"</b>, 
+		propose un fichier=pegase.py qui calcule, l'heure de départ minimale 
+		théorique, pour effectuer des obligations quotidiennes de 7h24 de travail 
+		effectif (ou autre durée à régler en dur), d'après le renseignement de 1 à 4 
+		badgeages passés en paramètres d'appel.<br /><br />&nbsp;&nbsp;Badgeages de 
 		type xx[h:]mm. Exemple 9:24 ou 09h24 ou 13H56 (le h ou : central acceptent 
-		la casse min/maj).</p>
-	<p>Une fois commité et poussé sur gitlab, un <a 
-	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main"><img 
-	alt="pipeline status" 
-	src="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg" />pipeline CI/CD,</a>
-	piloté par le fichier .gitlab-ci.yml [Paramètres | CI/CD | Pipelines généraux ],
-  lance :
+		la casse min/maj).<br />Une fois commité et poussé sur gitlab, un <a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main">
+	<img src="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg" 
+	alt="pipeline status" title="pipeline status"/>pipeline CI/CD, </a>piloté 
+	par le fichier .gitlab-ci.yml [Paramètres | CI/CD | Pipelines généraux ] lance :
 	<ol><li>Un contrôle de la qualité du code source python par
 	pylint|tox ou des codes en shell par shellcheck</li>
 	<li>Des tests unitaires par pytest 
@@ -63,20 +81,21 @@
 	<li>Une mise en forme du code source python par ruff</li> 
 	<li>Deux auto-documentations par doxygen et sphinx</li>
 	<li>Un affichage web récapitulatif gitlab-pages [Déploiement | Pages | 
-		Domaines & paramètres = https://outils-e76d7e.gitlab.meteo.fr/ ]</li>
+		Domaines & paramètres = <a href="https://outils-e76d7e.gitlab.meteo.fr/">
+		https://outils-e76d7e.gitlab.meteo.fr/</a> ]</li>
 	<li>TODO :une analyse automatique de la qualité du
 	code python par sonarqube</li>
 	<li>TODO :le build d'un package wheel</li>
-	<li>TODO :ajout de badges gitlab</li></ol></p></span>
-<ul>
-<li>🤏 <a href="doxygen/html/index.html" id="Documentation_Doxygen" 
-target="_blank" 
-title="Documentation du code source générée par Doxygen">Documentation
-générée par Doxygen</a></li>
-<li>🤌 <a href="sphinx-html/index.html" id="Documentation_sphinx_html" 
-target="_blank" 
-title="Documentation du code source générée par sphinx">Documentation
-html générée par Sphinx</a></li>
+	<li>TODO :ajout de badges gitlab</li></ol></div>
+	<div class="wrapper">
+	<div class="box a">
+	Documentation html<br />générée par :<ul>
+		<li>🤌 <a href="sphinx-html/index.html" id="Documentation_sphinx_html" 
+		target="_blank" title="Documentation du code source générée par 
+		sphinx">Sphinx</a></li>
+		<li>🤏 <a href="doxygen/html/index.html" id="Documentation_Doxygen" 
+		target="_blank" title="Documentation du code source générée par 
+		Doxygen">Doxygen</a></li></ul></div>
 <!--
 <li>🙏 Couverture du code source par des tests 
 unitaires en python version : <a href="htmlcov/3.12/index.html" 
@@ -90,22 +109,22 @@ id="cov_3.10" target="_blank"
 title="Couverture du code source python 3.10 par des tests 
 unitaires. Générée avec pytest">3.10</a></li>
 -->
-<li>🤝 <a href="tox_cov_html/index.html" id="tox coverage" target="_blank" 
-title="Couverture du code source python par des tests 
-unitaires. Générée par tox">Coverage généré par tox</a></a></li>
-<li>🤞 <a href="https://sonarcloud.io/project/overview?id=bruschin_Outils" 
+<div class="box b">Couverture du code python<br />par tests 
+unitaires via :<ul><li>🤝 <a href="tox_cov_html/index.html" id="tox coverage" 
+target="_blank" 
+title="Couverture par tox du code source python par des tests 
+unitaires.">Tox</a></li></ul></div>
+<div class="box c">TODO : Projet Outil Pegase<br />dans SonarQube<ul><li>🤞 <a 
+href="https://sonarcloud.io/project/overview?id=bruschin_Outils" 
 id="projet_sonarcoverage" target="_blank" 
 title="Projet requete_fin_mois dans SonarQube"><img 
 src="https://sonarcloud.io/api/project_badges/measure?project=
 bruschin_Outils&metric=alert_status" 
 alt="Outils Quality Gate" title="Outils Quality Gate" 
-width="48px"/> Projet Outils dans SonarQube</a></li>
-</ul>
-<br />
-
-<span class="colorize2">Fichiers des Logs : </span><br />
+width="48px"/> </a></li></ul></div>
+<div class="box d"><span class="colorize2"> Fichiers des Logs :</span>
 <ul>
-<li>🤡 <!-- <a href="build-rapport.txt" id="build" target="_blank" 
+<li>🤡 TODO : Build<!-- <a href="build-rapport.txt" id="build" target="_blank" 
 title="Log packaging">Build</a></li> -->
 <li>🤏 <a href="doxygen-rapport.txt" id="doxygen" target="_blank" 
 title="Log doxygen">Doxygen</a></li>
@@ -113,8 +132,7 @@ title="Log doxygen">Doxygen</a></li>
 title="Log mise en forme">Mef_versions</a></li>
 <li>🤪 <a href="pylint-rapport.txt" id="pylint" target="_blank" 
 title="Log pylint">Pylint</a></li>
-<!--
-<li>🤞 <a href="sonar-rapport.txt" id="sonar" target="_blank" 
+<li>🤞 TODO : Sonar<!--<a href="sonar-rapport.txt" id="sonar" target="_blank" 
 title="Log sonar">Sonar-scanner</a></li>
 -->
 <!--
@@ -133,6 +151,6 @@ title="Log shellcheck">Shellcheck</a></li>
 title="Log sphinx">Sphinx</a></li>
 <li>🤝 <a href="tox-rapport.txt" id="tuff" target="_blank" 
 title="Log tox">Tox</a></li>
-</ul></div>
+</ul></div></div></div>
 </body>
 </html>
