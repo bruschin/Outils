@@ -14,33 +14,60 @@
 <title>Outils pages (Version = @RELEASE_VERSION@ - @DATE@)</title>
 <link rel="ICON" href="Outils.png"/>
 <style type="TEXT/CSS">
-.colorize {text-align:left; background-color: rgb(214, 203, 139);
+.colorize1 {text-align:left; background-color: rgb(214, 203, 139);
   border: 3px solid rgb(24, 136, 48);}
 .colorize2 {text-align:left; background-color: rgb(95, 150, 63);
   border: 3px solid rgb(62, 66, 1);}
-
-
 </style>
 </head>
 <body>
-    <!--/* //NOSONAR */-->
-
-<!-- https://next.sonarqube.com/sonarqube/coding_rules?open=Web%3AS5256&rule_key=Web%3AS5256 -->
-<div class="colorize">
-<span class="colorize" style="opacity: 0.5;"><table aria-hidden="true"><tr>
-	<th id="logoOutils" rowspan ="5" style="vertical-align: middle;">&nbsp;<img src="Outils.png" 
-	style="width:48px;height:48px;border-style: none;vertical-align:middle;" 
-	alt="Outils Version = @RELEASE_VERSION@" 
-	title="Outils Version = @RELEASE_VERSION@" />&nbsp;</th>
-	<th id="nomproj">&nbsp;Nom du projet :&nbsp;</th><th id="Outils">&nbsp;Outils&nbsp;</th></tr>
-	<tr><td>&nbsp;Version =&nbsp;</td><td>&nbsp;@RELEASE_VERSION@&nbsp;</td></tr>
-	<tr><td>&nbsp;g&eacute;n&eacute;r&eacute; le : </td><td>&nbsp;@DATE@&nbsp;</td></tr>
-	<tr><td>&nbsp;Commit :&nbsp;</td><td>&nbsp;<a 
-	href="https://github.com/bruschin/Outils/commit/@COMMIT@" 
-	target="_blank">@COMMIT@</a></td></tr>
-	<tr><td>&nbsp;Pipeline :&nbsp;</td><td>&nbsp;<a 
-	href="https://github.com/bruschin/Outils/actions/runs/@PIPELINE@" 
-	target="_blank">@PIPELINE@</a></td></tr></table></span><br />
+	<!--/* //NOSONAR */-->
+	<!-- https://next.sonarqube.com/sonarqube/coding_rules?open=Web%3AS5256&rule_key=Web%3AS5256 -->
+<div class="colorize1"><span class="colorize1" style="opacity: 0.5;">
+	<table aria-hidden="true"><tr>
+	<th id="logoOutils" rowspan ="5" 
+		style="vertical-align: middle;">&nbsp;<img src="Outils.png" 
+		style="width:48px;height:48px;border-style: none;vertical-align:middle;" 
+		alt="Outil Pegase Version = @RELEASE_VERSION@" 
+		title="Outil Pegase Version = @RELEASE_VERSION@" />&nbsp;</th>
+	<th id="nomproj">&nbsp;Nom du projet :&nbsp;</th>
+	<th id="Outil_Pegase">&nbsp;Outil Pegase&nbsp;</th>
+	<th id="Outil_Version">&nbsp;Version =&nbsp;</th>
+	<th id="Outil_Release">&nbsp;@RELEASE_VERSION@&nbsp;</th>
+	<th id=""Outil_Generation>&nbsp;g&eacute;n&eacute;r&eacute; le :&nbsp;</th>
+	<th id="Outil_Date">&nbsp;@DATE@&nbsp;</th>
+	<th id="Outil_Commit">&nbsp;Commit :&nbsp;</th>
+	<th id="Outil_Refcommit">&nbsp;<a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/tree/@COMMIT@" 
+	target="_blank">@COMMIT@</a>&nbsp;</th>
+	<th id="Outil_pipeline">&nbsp;Pipeline :&nbsp;</th>
+	<th id="Outil_Refpipeline">&nbsp;<a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/pipelines/@PIPELINE@" 
+	target="_blank">@PIPELINE@</a>&nbsp;</th></tr></table></span><br />
+	<span id="description"><p>Le projet python Outils, propose un fichier 
+		pegase.py qui calcule, l'heure de départ minimale theorique pour effectuer 
+		des obligations quotidiennes de 7h24 de travail effectif, d'apres le 
+		renseignement de 1 à 4 badgeages passés en paramètres d'appel. Badgeages de 
+		type xx[h:]mm. Exemple 9:24 ou 09h24 ou 13H56 (le h ou : central acceptent 
+		la casse min/maj).</p>
+	<p>Une fois commité et poussé sur gitlab, un <a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main"><img 
+	alt="pipeline status" 
+	src="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg" />pipeline CI/CD,</a>
+	piloté par le fichier .gitlab-ci.yml [Paramètres | CI/CD | Pipelines généraux ],
+  lance :
+	<ol><li>Un contrôle de la qualité du code source python par
+	pylint|tox ou des codes en shell par shellcheck</li>
+	<li>Des tests unitaires par pytest 
+	(avec	calcul du % du code source couvert (outil coverage|tox))</li> 
+	<li>Une mise en forme du code source python par ruff</li> 
+	<li>Deux auto-documentations par doxygen et sphinx</li>
+	<li>Un affichage web récapitulatif gitlab-pages [Déploiement | Pages | 
+		Domaines & paramètres = https://outils-e76d7e.gitlab.meteo.fr/ ]</li>
+	<li>TODO :une analyse automatique de la qualité du
+	code python par sonarqube</li>
+	<li>TODO :le build d'un package wheel</li>
+	<li>TODO :ajout de badges gitlab</li></ol></p></span>
 <ul>
 <li>🤏 <a href="doxygen/html/index.html" id="Documentation_Doxygen" 
 target="_blank" 
