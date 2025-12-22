@@ -63,29 +63,31 @@
 	<th id="Outil_Refpipeline">&nbsp;<a 
 	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/pipelines/@PIPELINE@" 
 	target="_blank">@PIPELINE@</a>&nbsp;</th></tr></table></div>
-	<div class="mef1" id="description">&nbsp;&nbsp;Le projet python <b>"Outil Pegase"</b>, 
-		propose un fichier=pegase.py qui calcule, l'heure de départ minimale 
-		théorique, pour effectuer des obligations quotidiennes de 7h24 de travail 
-		effectif (ou autre durée à régler en dur), d'après le renseignement de 1 à 4 
-		badgeages passés en paramètres d'appel.<br /><br />&nbsp;&nbsp;Badgeages de 
+	<div class="mef1" id="description">&nbsp;&nbsp;Le projet python 
+		<b>"Outil Pegase"</b>, propose un fichier = <b>pegase.py</b> qui calcule, 
+		l'heure de départ minimale théorique, pour effectuer des obligations 
+		quotidiennes de 7h24 de travail effectif (ou autre durée à régler en dur), 
+		d'après le renseignement de 1 à 4 badgeages passés en paramètres d'appel.
+		<br /><br />&nbsp;&nbsp;Badgeages de 
 		type xx[h:]mm. Exemple 9:24 ou 09h24 ou 13H56 (le h ou : central acceptent 
-		la casse min/maj).<br />Une fois commité et poussé sur gitlab, un <a 
+		la casse min/maj).<br />Une fois commité et poussé sur gitlab, un pipeline 
+		CI/CD, <a 
 	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main">
 	<img src="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg" 
-	alt="pipeline status" title="pipeline status"/>pipeline CI/CD, </a>piloté 
+	alt="pipeline status" title="pipeline status"/></a> piloté 
 	par le fichier .gitlab-ci.yml [Paramètres | CI/CD | Pipelines généraux ] lance :
-	<ol><li>Un contrôle de la qualité du code source python par
-	pylint|tox ou des codes en shell par shellcheck</li>
-	<li>Des tests unitaires par pytest 
+	<ol><li>🤪 Un contrôle de la qualité du code source python par
+	pylint|tox ou des codes en shell par 😀 shellcheck</li>
+	<li>🤝 Des tests unitaires (python 3.10, 3.11 et 3.12) par pytest 
 	(avec	calcul du % du code source couvert (outil coverage|tox))</li> 
-	<li>Une mise en forme du code source python par ruff</li> 
-	<li>Deux auto-documentations par doxygen et sphinx</li>
+	<li>😻 Une mise en forme du code source python par ruff</li> 
+	<li>Deux auto-documentations par 🤏 Doxygen et 🤌 Sphinx</li>
 	<li>Un affichage web récapitulatif gitlab-pages [Déploiement | Pages | 
 		Domaines & paramètres = <a href="https://outils-e76d7e.gitlab.meteo.fr/">
 		https://outils-e76d7e.gitlab.meteo.fr/</a> ]</li>
 	<li>TODO :une analyse automatique de la qualité du
 	code python par sonarqube</li>
-	<li>TODO :le build d'un package wheel</li>
+	<li>TODO 🤡 :le build d'un package wheel</li>
 	<li>TODO :ajout de badges gitlab</li></ol></div>
 	<div class="wrapper">
 	<div class="box a">
