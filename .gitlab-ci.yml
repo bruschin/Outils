@@ -44,8 +44,8 @@ workflow:
 .some-actions-apt-before: &some-actions-apt-before
   - apt-get update || true
   - apt-get upgrade -y || true
-  - apt-get install -y shellcheck git ca-certificates graphviz rhino lcov dia 
-      doxygen curl build-essential zlib1g-dev libffi-dev tk-dev|| true 
+  - apt-get install -y shellcheck ca-certificates graphviz rhino lcov dia 
+      doxygen build-essential zlib1g-dev libffi-dev tk-dev|| true 
   - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
       libssl-dev liblzma-dev python3-sphinx make || true
   - apt-get install -y  python3-sphinx-copybutton sphinx-common
@@ -62,6 +62,7 @@ workflow:
 
 .gestion_env_python_before: &gestion_env_python_before
   - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
+  - apt-get install -y git || true curl
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
   - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
@@ -74,6 +75,7 @@ workflow:
 
 .gestion_pyenv: &gestion_pyenv
   - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
+  - apt-get install -y curl || true 
     # - curl -kfsSL https://pyenv.run | bash || true
   - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
