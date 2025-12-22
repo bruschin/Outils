@@ -62,7 +62,7 @@ workflow:
 
 .gestion_env_python_before: &gestion_env_python_before
   - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
-  - apt-get install -y git || true curl
+  - apt-get install -y git || true
   - python3 -m venv envdev || true
   - source envdev/bin/activate || true
   - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
