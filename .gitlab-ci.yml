@@ -57,6 +57,7 @@ workflow:
   - glab config set check_update false
   - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_FQDN --api-protocol $CI_SERVER_PROTOCOL
   - glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs/proxy1.crt"
+  # curl --header "PRIVATE-TOKEN: ****" --url "https://gitlab.meteo.fr/api/v4/projects/2929/secure_files
 
   - export CURL_CA_BUNDLE="/etc/ssl/certs/proxy1.crt"
   - update-ca-certificates -f
