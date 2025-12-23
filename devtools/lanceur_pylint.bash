@@ -3,11 +3,20 @@
 ## genere rapport pylint
 ## nécessite d'avoir excute
 ## pylint --generate-rcfile > .pylintrc
+## [2025-12-23] BN V1.0.1
+
+# Pour pylint :
+  # - apt-get install -y ca-certificates git curl
+  # - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+  # - update-ca-certificates -f
+  # + gestion envs python, git, curl, nexus
+
 # https://pypi.org/project/isort/
 # https://pypi.org/project/black/
 ###########
 REPTRAV="$(dirname "$0")"
 REPLOG="rapports"
+REPPRODFINALE="public"
 REPCONF="docs"
 FICCONF="${REPCONF}/.pylintrc"
 FICSORTIE="${REPLOG}/pylint-rapport.txt"
@@ -19,6 +28,11 @@ echo "### $0 DEBUT ###"
 
 if ! test -d "${REPLOG}"; then
   mkdir -p "${REPLOG}" 2>/dev/null
+fi
+
+# securite en cas d'oubli dans pipeline CI/CD
+if ! test -d "${REPPRODFINALE}"; then
+  mkdir -p "${REPPRODFINALE}" 2>/dev/null
 fi
 
 exec 6>&1

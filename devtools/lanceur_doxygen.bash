@@ -3,6 +3,7 @@
 ## genere rapport doxygen
 ## nécessite d'avoir installé doxygen dia graphviz et généré le fichier Doxyfile
 ## gestion version dans Doxyfile gérée par mef_versions.bash
+## [2025-12-23] BN V1.0.1
 
 # Pour doxygen : 
 # https://askubuntu.com/questions/1291874/how-to-install-doxygen-on-ubuntu

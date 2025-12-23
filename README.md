@@ -8,6 +8,7 @@
   + TODO : Identifier packages systemes nécessaires par action.
     + DO : Doxygen
     + DO : Shellcheck
+    + DO : Pylint
 
 ## [2025-12-17] CA V1.4.1
 

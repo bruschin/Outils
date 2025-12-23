@@ -48,15 +48,16 @@ workflow:
   - apt-get install -y doxygen libxapian30 graphviz dia
   # Pour  shellcheck :
   - apt-get install -y shellcheck
-  # - apt-get install -y  ca-certificates rhino lcov
+  # Pour pylint :
+  - apt-get install -y ca-certificates git curl
+  - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+  - update-ca-certificates -f
+  # - apt-get install -y rhino lcov
   #     build-essential zlib1g-dev libffi-dev tk-dev|| true
   # - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
   #     libssl-dev liblzma-dev python3-sphinx make || true
   # - apt-get install -y  python3-sphinx-copybutton sphinx-common
   #     python3-pydata-sphinx-theme python3-alabaster || true
-  # - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
-  # - update-ca-certificates -f
-
 .some_mise_en_forme_before: &some_mise_en_forme_before
   - export NORMALIZED_NAME=$(echo "${CI_PROJECT_NAME}" | tr '-' '_') || true
   - export TXT_RED="\e[31m" && TXT_CLEAR="\e[0m"
@@ -64,54 +65,50 @@ workflow:
   - cd "$CI_PROJECT_DIR"
   - mkdir public || true
 
-# .gestion_env_python_before: &gestion_env_python_before
-#   # - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
-#   # - apt-get update || true
-#   # - apt-get install -y git || true
-#   # - python3 -m venv envdev || true
-#   # - source envdev/bin/activate || true
-#   # - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
-#   # - git config --global http.sslVerify false
-#   # - git config --global https.sslVerify false
-#   # - git config --global https.proxy http://proxy.meteo.fr:11011
-#   # - set GIT_SSL_NO_VERIFY
-#   # - echo "proxy = http://proxy.meteo.fr:11011" > $HOME/.curlrc
-#   # - echo "insecure" >> $HOME/.curlrc
+.gestion_env_python_before: &gestion_env_python_before
+  - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
+  - python3 -m venv envdev || true
+  - source envdev/bin/activate || true
+  - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
+  - git config --global http.sslVerify false
+  - git config --global https.sslVerify false
+  - git config --global https.proxy http://proxy.meteo.fr:11011
+  - set GIT_SSL_NO_VERIFY
+  - echo "proxy = http://proxy.meteo.fr:11011" > $HOME/.curlrc
+  - echo "insecure" >> $HOME/.curlrc
 
-# .gestion_pyenv: &gestion_pyenv
-#   # - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
-#   # - apt-get update || true
-#   # - apt-get install -y curl || true
-#   #   # - curl -kfsSL https://pyenv.run | bash || true
-#   # - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
-#   # - export PYENV_ROOT="$HOME/.pyenv"
-#   # - export PATH="$PYENV_ROOT/bin:$PATH"
-#   # - eval "$(pyenv init - bash)" || true
-#   # ### docker MF mode installation indirect
-#   # - mkdir -p ~/.pyenv/cache/ || true
-#   # - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz
-#   #     https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
-#   # - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz
-#   #     https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true
-#   # - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz
-#   #     https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
-#   # - pyenv install 3.10.19 || true
-#   # - pyenv install 3.11.14 || true
-#   # - pyenv install 3.12.12 || true
-#   # - pyenv global 3.10 3.11 3.12
+.gestion_pyenv: &gestion_pyenv
+  - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
+    # - curl -kfsSL https://pyenv.run | bash || true
+  - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
+  - export PYENV_ROOT="$HOME/.pyenv"
+  - export PATH="$PYENV_ROOT/bin:$PATH"
+  - eval "$(pyenv init - bash)" || true
+  ### docker MF mode installation indirect
+  - mkdir -p ~/.pyenv/cache/ || true
+  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz
+      https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
+  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz
+      https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true
+  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz
+      https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
+  - pyenv install 3.10.19 || true
+  - pyenv install 3.11.14 || true
+  - pyenv install 3.12.12 || true
+  - pyenv global 3.10 3.11 3.12
 
-# .gestion_pip_nexus: &gestion_pip_nexus
+.gestion_pip_nexus: &gestion_pip_nexus
 
-#   # - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
-#   # - pip config set global.trusted-host nexus-sidev.meteo.fr || true
-#   # - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
-#   # - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
+  - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
+  - pip config set global.trusted-host nexus-sidev.meteo.fr || true
+  - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
+  - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
 
-# .gestion_pip_update: &gestion_pip_update
-#   # - python3 -m pip install --upgrade pip
-#   # - python3 -m pip install pylint-common --use-pep517
-#   # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-#   # - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
+.gestion_pip_update: &gestion_pip_update
+  - python3 -m pip install --upgrade pip
+  - python3 -m pip install pylint-common --use-pep517
+  - pip install -r docs/requirements.txt --root-user-action=ignore || true
+  - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
 
 before_script:
   # Normalize package name once at the start of any job
@@ -121,10 +118,10 @@ before_script:
 
   - *some-actions-apt-before
   - *some_mise_en_forme_before
-  # - *gestion_env_python_before
-  # - *gestion_pyenv
-  # - *gestion_pip_nexus
-  # - *gestion_pip_update
+  - *gestion_env_python_before
+  - *gestion_pyenv
+  - *gestion_pip_nexus
+  - *gestion_pip_update
 
 #https://misc.flogisoft.com/bash/tip_colors_and_formatting
 
@@ -170,10 +167,9 @@ job:Lint:
       policy: pull
   script:
     - echo -e "${TXT_RED}script lint${TXT_CLEAR}"
+    - rm -rf public/* || true
     - devtools/lanceur_shellcheck.bash || true
-    # # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-    # - rm -rf public/* || true
-    # - devtools/lanceur_pylint.bash || true
+    - devtools/lanceur_pylint.bash || true
     # - devtools/lanceur_ruff.bash || true
     # - devtools/lanceur_tox.bash || true
     

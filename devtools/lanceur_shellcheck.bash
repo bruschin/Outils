@@ -1,9 +1,13 @@
 #!/bin/bash
 ###########
-## genere rapport lint scripts bash par shellcheck 
+## genere rapport lint des scripts bash par shellcheck
+## [2025-12-23] BN V1.0.1
 
 # Pour shellcheck : 
 # apt-get install -y shellcheck
+
+# The following NEW packages will be installed:
+#   \shellcheck
 
 ###########
 REPTRAV="$(dirname "$0")"
