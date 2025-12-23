@@ -86,7 +86,7 @@ workflow:
   - set GIT_SSL_NO_VERIFY
   - echo "proxy = http://proxy.meteo.fr:11011" > $HOME/.curlrc
   - echo "insecure" >> $HOME/.curlrc
-  - echo "cacert=/etc/ssl/certs/ca-certificates.crt" >> $HOME/.curlrc
+  #- echo "cacert=/etc/ssl/certs/ca-certificates.crt" >> $HOME/.curlrc
 
 .gestion_pyenv: &gestion_pyenv
   - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
