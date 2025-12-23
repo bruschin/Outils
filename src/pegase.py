@@ -41,7 +41,7 @@ dans ce script la valeur de la variable globale DUREE_JOUR. Exemple:
       Ajout calcul systeme pivot autre que 37h5j.
   + [2025-12-17] CA V1.4.1
       Ajout calcul gain bilan + gestion 4 badgeages.
-  + [2025-12-19] BN V1.4.2
+  + [2025-12-23] BN V1.4.2
       Gestion départ avec 1 ou 2 badgeages.
 
 """
@@ -55,7 +55,7 @@ from datetime import datetime
 # VARIABLES GLOBALES :
 
 FILENAME = "pegase.py"
-VERSION = f"  {FILENAME}: [2025-12-19] BN V1.4.2\n"
+VERSION = f"  {FILENAME}: [2025-12-23] BN V1.4.2\n"
 USAGE = (
   f"  usage: {FILENAME} [OPTIONS]\n" + "  OPTIONS:\n"
   "  [09:31 - 12h00 - 12H38] 1 à 4 badgeage(s) OBLIGATOIRE(S)\n"

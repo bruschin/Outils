@@ -1,10 +1,12 @@
-# Outils [2025-12-19] 👉 BN V1.4.2
+# Outils [2025-12-23] 👉 BN V1.4.2
 
-## [2025-12-19] BN V1.4.2
+## [2025-12-23] BN V1.4.2
 
-+ Gestion départ avec 1 ou 2 badgeages
-+ Révision gitlab ci/cd. production documentation, linter, tests.
++ Meilleure gestion départ avec 1 ou 2 badgeages
++ Révision gitlab ci/cd. Production documentations, linter, tests.
 + TODO: gérer une liste de todo.
++ + TODO : Identifier packages systemes nécessaires par action.
++ + DO : Doxygen
 
 ## [2025-12-17] CA V1.4.1
 
