@@ -45,7 +45,7 @@ workflow:
   - apt-get update || true
   - apt-get upgrade -y || true
   # Pour doxygen : https://askubuntu.com/questions/1291874/how-to-install-doxygen-on-ubuntu
-  - apt-get install -y doxygen libxapian30 graphviz
+  - apt-get install -y doxygen libxapian30 graphviz dia
   # - apt-get install -y shellcheck ca-certificates rhino lcov dia
   #     build-essential zlib1g-dev libffi-dev tk-dev|| true
   # - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
@@ -118,7 +118,7 @@ before_script:
   # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
 
   - *some-actions-apt-before
-  # - *some_mise_en_forme_before
+  - *some_mise_en_forme_before
   # - *gestion_env_python_before
   # - *gestion_pyenv
   # - *gestion_pip_nexus
