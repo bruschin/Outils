@@ -55,9 +55,9 @@ workflow:
   - wget --no-check-certificate https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_amd64.deb
   - apt-get install -y ./glab_1.80.4_linux_amd64.deb
   - glab config set check_update false
-  - ls /etc/pki/tls/certs/ /etc/ssl/certs/
+  #- ls /etc/pki/tls/certs/ /etc/ssl/certs/
   - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_FQDN --api-protocol $CI_SERVER_PROTOCOL
-  - glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs/proxy1.crt"
+  - glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs/proxy1.pem"
   # curl --header "PRIVATE-TOKEN: ****" --url "https://gitlab.meteo.fr/api/v4/projects/2929/secure_files
 
   - export CURL_CA_BUNDLE="/etc/ssl/certs/proxy1.crt"
