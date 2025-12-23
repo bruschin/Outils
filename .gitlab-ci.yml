@@ -42,6 +42,7 @@ workflow:
 
 # https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html
 .some-actions-apt-before: &some-actions-apt-before
+  - echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
   - apt-get update || true
   - apt-get upgrade -y || true
   # Pour doxygen : https://askubuntu.com/questions/1291874/how-to-install-doxygen-on-ubuntu
