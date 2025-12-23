@@ -52,7 +52,7 @@ workflow:
   - apt-get install -y shellcheck
   # Pour pylint :
   - apt-get install -y ca-certificates git curl wget
-  - wget https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_amd64.deb
+  - wget --no-check-certificate https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_amd64.deb
   - apt-get install -y ./glab_1.80.4_linux_amd64.deb
   - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_FQDN --api-protocol $CI_SERVER_PROTOCOL
   - glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs/proxy1.crt"
