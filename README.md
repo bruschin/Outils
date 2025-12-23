@@ -35,3 +35,4 @@
 ## Documentations
 
 + [documentation du projet](https://outils-e76d7e.gitlab.meteo.fr/)
++ ![coverage](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/coverage.svg?job=lint)

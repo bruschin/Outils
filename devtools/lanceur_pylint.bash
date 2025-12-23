@@ -11,6 +11,21 @@
   # - update-ca-certificates -f
   # + gestion envs python, git, curl, nexus
 
+# The following additional packages will be installed:
+#   bash-completion git-man less libcbor0.10 libcurl4t64 liberror-perl
+#   libfido2-1 libgdbm-compat4t64 libperl5.40 libxmuu1 openssh-client patch perl
+#   perl-modules-5.40 xauth
+# Suggested packages:
+#   gettext-base git-doc git-email git-gui gitk gitweb git-cvs git-mediawiki
+#   git-svn sensible-utils keychain libpam-ssh monkeysphere ssh-askpass ed
+#   diffutils-doc perl-doc libterm-readline-gnu-perl
+#   | libterm-readline-perl-perl make libtap-harness-archive-perl
+# The following NEW packages will be installed:
+#   bash-completion curl git git-man less libcbor0.10 libcurl4t64 liberror-perl
+#   libfido2-1 libgdbm-compat4t64 libperl5.40 libxmuu1 openssh-client patch perl
+#   perl-modules-5.40 xauth
+
+
 # https://pypi.org/project/isort/
 # https://pypi.org/project/black/
 ###########
