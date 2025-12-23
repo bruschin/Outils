@@ -5,11 +5,11 @@ Documentation Outil Pegase
     ``Release`` : |release| 🐮
     ``Mise à jour`` : |today| 🦏
 
-+ 🐺 Lien vers `la couverture du code générée avec pytest <htmlcov/index.html>`_. 🐺
-+ 🐺 Lien vers `la couverture du code générée avec tox <tox_cov_html/index.html>`_. 🐺
-+ 🦁 Lien vers `la documentation du projet générée avec doxygen <doxygen/index.html>`_. 🦁
-+ 🦁 Lien vers `le fichier xml généré avec pytest <coverage1.xml>`_. 🦁
-+ 🦁 Lien vers `le fichier xml généré avec tox <coverage2.xml>`_. 🦁
++ 🐺 Lien vers `la couverture du code générée avec pytest <../htmlcov/index.html>`_. 🐺
++ 🐺 Lien vers `la couverture du code générée avec tox <../tox_cov_html/index.html>`_. 🐺
++ 🦁 Lien vers `la documentation du projet générée avec doxygen <../doxygen/index.html>`_. 🦁
++ 🦁 Lien vers `le fichier xml de couverture du code, généré avec tox <../tox_cov.xml>`_. 🦁
++ 🦁 Lien vers `le fichier txt log de tox <../tox-rapport.txt>`_. 🦁
 + 🏁 wiki : git clone https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git
 
 Essai usage graphviz

@@ -1,6 +1,6 @@
 # # Official language image. Look for the different tagged releases at:
 # # https://hub.docker.com/r/library/python/tags/
-# # Une fois deployé, gitlab se place dans le projet : 
+# # Une fois deployé, gitlab se place dans le projet :
 # /builds/desr-sires-pga/support_n1/Outils
 # https://sonar.meteo.fr/tutorials?id=outils
 
@@ -40,18 +40,20 @@ workflow:
     - if: $CI_PROJECT_URL =~ "https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils.git"
       when: always
 
-# https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html 
+# https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html
 .some-actions-apt-before: &some-actions-apt-before
   - apt-get update || true
   - apt-get upgrade -y || true
-  - apt-get install -y shellcheck ca-certificates graphviz rhino lcov dia 
-      doxygen build-essential zlib1g-dev libffi-dev tk-dev|| true 
-  - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
-      libssl-dev liblzma-dev python3-sphinx make || true
-  - apt-get install -y  python3-sphinx-copybutton sphinx-common
-      python3-pydata-sphinx-theme python3-alabaster || true
-  - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
-  - update-ca-certificates -f
+  # Pour doxygen : https://askubuntu.com/questions/1291874/how-to-install-doxygen-on-ubuntu
+  - apt-get install -y doxygen libxapian30 graphviz
+  # - apt-get install -y shellcheck ca-certificates rhino lcov dia
+  #     build-essential zlib1g-dev libffi-dev tk-dev|| true
+  # - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
+  #     libssl-dev liblzma-dev python3-sphinx make || true
+  # - apt-get install -y  python3-sphinx-copybutton sphinx-common
+  #     python3-pydata-sphinx-theme python3-alabaster || true
+  # - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
+  # - update-ca-certificates -f
 
 .some_mise_en_forme_before: &some_mise_en_forme_before
   - export NORMALIZED_NAME=$(echo "${CI_PROJECT_NAME}" | tr '-' '_') || true
@@ -61,69 +63,69 @@ workflow:
   - mkdir public || true
 
 .gestion_env_python_before: &gestion_env_python_before
-  - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
-  - apt-get update || true
-  - apt-get install -y git || true
-  - python3 -m venv envdev || true
-  - source envdev/bin/activate || true
-  - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
-  - git config --global http.sslVerify false
-  - git config --global https.sslVerify false
-  - git config --global https.proxy http://proxy.meteo.fr:11011
-  - set GIT_SSL_NO_VERIFY
-  - echo "proxy = http://proxy.meteo.fr:11011" > $HOME/.curlrc
-  - echo "insecure" >> $HOME/.curlrc
+  # - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
+  # - apt-get update || true
+  # - apt-get install -y git || true
+  # - python3 -m venv envdev || true
+  # - source envdev/bin/activate || true
+  # - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
+  # - git config --global http.sslVerify false
+  # - git config --global https.sslVerify false
+  # - git config --global https.proxy http://proxy.meteo.fr:11011
+  # - set GIT_SSL_NO_VERIFY
+  # - echo "proxy = http://proxy.meteo.fr:11011" > $HOME/.curlrc
+  # - echo "insecure" >> $HOME/.curlrc
 
 .gestion_pyenv: &gestion_pyenv
-  - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
-  - apt-get update || true
-  - apt-get install -y curl || true 
-    # - curl -kfsSL https://pyenv.run | bash || true
-  - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
-  - export PYENV_ROOT="$HOME/.pyenv"
-  - export PATH="$PYENV_ROOT/bin:$PATH"
-  - eval "$(pyenv init - bash)" || true
-  ### docker MF mode installation indirect
-  - mkdir -p ~/.pyenv/cache/ || true 
-  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz
-      https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
-  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz
-      https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true 
-  - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz
-      https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
-  - pyenv install 3.10.19 || true
-  - pyenv install 3.11.14 || true
-  - pyenv install 3.12.12 || true
-  - pyenv global 3.10 3.11 3.12
+  # - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
+  # - apt-get update || true
+  # - apt-get install -y curl || true
+  #   # - curl -kfsSL https://pyenv.run | bash || true
+  # - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
+  # - export PYENV_ROOT="$HOME/.pyenv"
+  # - export PATH="$PYENV_ROOT/bin:$PATH"
+  # - eval "$(pyenv init - bash)" || true
+  # ### docker MF mode installation indirect
+  # - mkdir -p ~/.pyenv/cache/ || true
+  # - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz
+  #     https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
+  # - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz
+  #     https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true
+  # - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz
+  #     https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
+  # - pyenv install 3.10.19 || true
+  # - pyenv install 3.11.14 || true
+  # - pyenv install 3.12.12 || true
+  # - pyenv global 3.10 3.11 3.12
 
 .gestion_pip_nexus: &gestion_pip_nexus
 
-  - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
-  - pip config set global.trusted-host nexus-sidev.meteo.fr || true
-  - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
-  - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
+  # - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
+  # - pip config set global.trusted-host nexus-sidev.meteo.fr || true
+  # - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
+  # - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
 
 .gestion_pip_update: &gestion_pip_update
-  - python3 -m pip install --upgrade pip
-  - python3 -m pip install pylint-common --use-pep517
-  - pip install -r docs/requirements.txt --root-user-action=ignore || true
-  - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
+  # - python3 -m pip install --upgrade pip
+  # - python3 -m pip install pylint-common --use-pep517
+  # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+  # - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
 
 before_script:
   # Normalize package name once at the start of any job
-  
+
   # Use Météo-France's own PyPI-like registry, more info at
   # http://confluence.meteo.fr/display/MOT/Nexus+-+Guide+d%27utilisation#NexusGuided'utilisation-D%C3%A9p%C3%B4tpython
-  
+
   - *some-actions-apt-before
-  - *some_mise_en_forme_before
-  - *gestion_env_python_before
-  - *gestion_pyenv
-  - *gestion_pip_nexus
-  - *gestion_pip_update
-  
+  # - *some_mise_en_forme_before
+  # - *gestion_env_python_before
+  # - *gestion_pyenv
+  # - *gestion_pip_nexus
+  # - *gestion_pip_update
+
 #https://misc.flogisoft.com/bash/tip_colors_and_formatting
-  
+
 
 # composant sonarqube et analyse sécurité
 # https://gitlab.meteo.fr/explore/catalog/ci-cd-catalog-mf/sca
@@ -149,8 +151,8 @@ stages:
   - lint
   # - test
   # - quality
-  - sca
-  - build
+  #- sca
+  #- build
   - deploy
 
 # Retry a job automatically if it fails (2 times)
@@ -165,30 +167,30 @@ job:Lint:
      # override the policy
       policy: pull
   script:
-    - echo -e "${TXT_RED}script lint${TXT_CLEAR}"
-    # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-    - rm -rf public/* || true
-    - devtools/lanceur_pylint.bash || true
-    - devtools/lanceur_ruff.bash || true
-    - devtools/lanceur_tox.bash || true
-    - devtools/lanceur_shellcheck.bash || true
+    # - echo -e "${TXT_RED}script lint${TXT_CLEAR}"
+    # # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+    # - rm -rf public/* || true
+    # - devtools/lanceur_pylint.bash || true
+    # - devtools/lanceur_ruff.bash || true
+    # - devtools/lanceur_tox.bash || true
+    # - devtools/lanceur_shellcheck.bash || true
 
-    - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
-    - ls -ail rapports/*
-    #- mv rapports/coverage* public/ || true
+    # - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
+    # - ls -ail rapports/*
+    # #- mv rapports/coverage* public/ || true
 
     - echo -e "${TXT_RED}Documentations${TXT_CLEAR}"
     - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
     - devtools/lanceur_doxygen.bash || true
-    - devtools/lanceur_sphinx.bash || true
+    #- devtools/lanceur_sphinx.bash || true
 
     - ls -ail rapports/*
 
     - mv rapports/*txt public/ || true
-    - mv rapports/*xml public/ || true
-    - mv rapports/tox_cov_html public/ || true
+    # - mv rapports/*xml public/ || true
+    # - mv rapports/tox_cov_html public/ || true
     - mv rapports/doxygen public/ || true
-    - mv build/sphinx-* public/ || true
+    #- mv build/sphinx-* public/ || true
       ### index de gitlab-pages :
     - cp -f docs/index.html public/ || true
     - cp -f docs/Outils.png public/ || true
@@ -213,7 +215,7 @@ job:Lint:
 #     - ls -ail rapports/*
 #     - mv -f rapports/htmlcov public/ || true
 #     - mv rapports/coverage* public/ || true
-#     - mv rapports/*txt public/  || true    
+#     - mv rapports/*txt public/  || true
 #   parallel:
 #     matrix:
 #       # https://docs.gitlab.com/ee/ci/yaml/#parallelmatrix
@@ -244,51 +246,51 @@ job:Lint:
 #     paths:
 #       - public
 
-job:CheckDependencies:
-  stage: sca
-  cache:
-    policy: pull
-    key: cache-$CI_COMMIT_REF_SLUG
-    paths:
-      - public/
-  before_script:
-    - cd "$CI_PROJECT_DIR"
-  script:
-    - echo -e "${TXT_RED}script sca${TXT_CLEAR}"
-  allow_failure: true
-  rules:
-    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-    - if: $CI_COMMIT_BRANCH == 'main'
-  artifacts:
-    paths:
-      - public
+# job:CheckDependencies:
+#   stage: sca
+#   cache:
+#     policy: pull
+#     key: cache-$CI_COMMIT_REF_SLUG
+#     paths:
+#       - public/
+#   before_script:
+#     - cd "$CI_PROJECT_DIR"
+#   script:
+#     - echo -e "${TXT_RED}script sca${TXT_CLEAR}"
+#   allow_failure: true
+#   rules:
+#     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+#     - if: $CI_COMMIT_BRANCH == 'main'
+#   artifacts:
+#     paths:
+#       - public
 
-job:Packaging:
-  stage: build
-  #image: "python:3.12-slim"
-  cache:
-    policy: pull
-    key: cache-$CI_COMMIT_REF_SLUG
-    paths:
-      - public/
-  before_script:
-    - cd "$CI_PROJECT_DIR"   
-    - *gestion_env_python_before
-    - *gestion_pip_nexus
-    - *gestion_pip_update
-  script:
-    - echo -e "${TXT_RED}script build${TXT_CLEAR}"
-    # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-    - devtools/lanceur_build.bash || true
-    - ls -ail *
-    - mv rapports/*txt public/ || true
-    - ls -ail build/* || true
-  artifacts:
-    paths:
-      - public
-      - build/dist
-  only:
-    - main
+# job:Packaging:
+#   stage: build
+#   #image: "python:3.12-slim"
+#   cache:
+#     policy: pull
+#     key: cache-$CI_COMMIT_REF_SLUG
+#     paths:
+#       - public/
+#   before_script:
+#     - cd "$CI_PROJECT_DIR"
+#     - *gestion_env_python_before
+#     - *gestion_pip_nexus
+#     - *gestion_pip_update
+#   script:
+#     - echo -e "${TXT_RED}script build${TXT_CLEAR}"
+#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+#     - devtools/lanceur_build.bash || true
+#     - ls -ail *
+#     - mv rapports/*txt public/ || true
+#     - ls -ail build/* || true
+#   artifacts:
+#     paths:
+#       - public
+#       - build/dist
+#   only:
+#     - main
 
 job:Deploy:
   stage: deploy
@@ -304,7 +306,7 @@ job:Deploy:
   after_script:
     - echo -e "${TXT_RED}after_script deploy${TXT_CLEAR}"
   artifacts:
-    paths: 
+    paths:
       - public
   pages: true # specifies that this is a Pages job
   only:
