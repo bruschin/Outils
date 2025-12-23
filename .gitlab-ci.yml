@@ -52,8 +52,8 @@ workflow:
   - apt-get install -y shellcheck
   # Pour pylint :
   - apt-get install -y ca-certificates git curl python3-gitlab
-  - glab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_FQDN --api-protocol $CI_SERVER_PROTOCOL
-  - glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs/proxy1.crt"
+  - python3-gitlab auth login --job-token $CI_JOB_TOKEN --hostname $CI_SERVER_FQDN --api-protocol $CI_SERVER_PROTOCOL
+  - python3-gitlab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs/proxy1.crt"
 
   - export CURL_CA_BUNDLE="/etc/ssl/certs/proxy1.crt"
   - update-ca-certificates -f

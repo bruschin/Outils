@@ -6,7 +6,7 @@
 ## [2025-12-23] BN V1.0.1
 
 # Pour pylint :
-  # - apt-get install -y ca-certificates git curl
+  # - apt-get install -y ca-certificates git curl python3-gitlab
   # - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
   # - update-ca-certificates -f
   # + gestion envs python, git, curl, nexus
@@ -14,17 +14,22 @@
 # The following additional packages will be installed:
 #   bash-completion git-man less libcbor0.10 libcurl4t64 liberror-perl
 #   libfido2-1 libgdbm-compat4t64 libperl5.40 libxmuu1 openssh-client patch perl
-#   perl-modules-5.40 xauth
+#   perl-modules-5.40 python3-certifi python3-chardet python3-charset-normalizer
+#   python3-idna python3-requests python3-requests-toolbelt python3-urllib3
+#   xauth
 # Suggested packages:
 #   gettext-base git-doc git-email git-gui gitk gitweb git-cvs git-mediawiki
 #   git-svn sensible-utils keychain libpam-ssh monkeysphere ssh-askpass ed
 #   diffutils-doc perl-doc libterm-readline-gnu-perl
 #   | libterm-readline-perl-perl make libtap-harness-archive-perl
+#   python-charset-normalizer-doc python-gitlab-doc python3-cryptography
+#   python3-openssl python3-socks python-requests-doc python3-brotli
 # The following NEW packages will be installed:
 #   bash-completion curl git git-man less libcbor0.10 libcurl4t64 liberror-perl
 #   libfido2-1 libgdbm-compat4t64 libperl5.40 libxmuu1 openssh-client patch perl
-#   perl-modules-5.40 xauth
-
+#   perl-modules-5.40 python3-certifi python3-chardet python3-charset-normalizer
+#   python3-gitlab python3-idna python3-requests python3-requests-toolbelt
+#   python3-urllib3 xauth
 
 # https://pypi.org/project/isort/
 # https://pypi.org/project/black/
