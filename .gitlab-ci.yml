@@ -77,8 +77,10 @@ workflow:
 
 .gestion_env_python_before: &gestion_env_python_before
   - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
-  - python3 -m venv envdev || true
-  - source envdev/bin/activate || true
+  - rm -rf $HOME/envdev || true
+  - rm -rf $HOME/.pyenv || true
+  - python3 -m venv $HOME/envdev || true
+  - source $HOME/envdev/bin/activate || true
   - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
   - git config --global http.sslVerify false
   - git config --global https.sslVerify false
@@ -98,15 +100,15 @@ workflow:
   ### docker MF mode installation indirect
   - mkdir -p ~/.pyenv/cache/ || true
   - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.10.19.tar.xz
-      https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz
+      https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz || true
   - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.11.14.tar.xz
       https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true
   - curl -k --output-dir ~/.pyenv/cache/ -o Python-3.12.12.tar.xz
-      https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz
+      https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz || true
   - pyenv install 3.10.19 || true
   - pyenv install 3.11.14 || true
   - pyenv install 3.12.12 || true
-  - pyenv global 3.10 3.11 3.12
+  - pyenv global 3.10 3.11 3.12 || true
 
 .gestion_pip_nexus: &gestion_pip_nexus
 
