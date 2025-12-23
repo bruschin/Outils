@@ -1,5 +1,9 @@
 # Outils [2025-12-23] 👉 BN V1.4.2
 
+[![pipeline status](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg)](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main)
+[![coverage report](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/coverage.svg)](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main)
+[![Latest Release](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/badges/release.svg)](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/releases)
+
 ## [2025-12-23] BN V1.4.2
 
 + Meilleure gestion départ avec 1 ou 2 badgeages
