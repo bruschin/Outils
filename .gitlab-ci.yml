@@ -46,7 +46,9 @@ workflow:
   - apt-get upgrade -y || true
   # Pour doxygen : https://askubuntu.com/questions/1291874/how-to-install-doxygen-on-ubuntu
   - apt-get install -y doxygen libxapian30 graphviz dia
-  # - apt-get install -y shellcheck ca-certificates rhino lcov dia
+  # Pour  shellcheck :
+  - apt-get install -y shellcheck
+  # - apt-get install -y  ca-certificates rhino lcov
   #     build-essential zlib1g-dev libffi-dev tk-dev|| true
   # - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
   #     libssl-dev liblzma-dev python3-sphinx make || true
@@ -167,13 +169,14 @@ job:Lint:
      # override the policy
       policy: pull
   script:
-    # - echo -e "${TXT_RED}script lint${TXT_CLEAR}"
+    - echo -e "${TXT_RED}script lint${TXT_CLEAR}"
+    - devtools/lanceur_shellcheck.bash || true
     # # - pip install -r docs/requirements.txt --root-user-action=ignore || true
     # - rm -rf public/* || true
     # - devtools/lanceur_pylint.bash || true
     # - devtools/lanceur_ruff.bash || true
     # - devtools/lanceur_tox.bash || true
-    # - devtools/lanceur_shellcheck.bash || true
+    
 
     # - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
     # - ls -ail rapports/*

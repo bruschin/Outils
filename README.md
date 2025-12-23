@@ -5,8 +5,9 @@
 + Meilleure gestion départ avec 1 ou 2 badgeages
 + Révision gitlab ci/cd. Production documentations, linter, tests.
 + TODO: gérer une liste de todo.
-+ + TODO : Identifier packages systemes nécessaires par action.
-+ + DO : Doxygen
+  + TODO : Identifier packages systemes nécessaires par action.
+    + DO : Doxygen
+    + DO : Shellcheck
 
 ## [2025-12-17] CA V1.4.1
 
