@@ -1,12 +1,15 @@
 #!/bin/bash
 ###########
 ## genere package wheel Outils
+## ## [2025-12-23] BN V1.0.1
+
 ## pip install builf --user
 ## https://packaging.python.org/en/latest/tutorials/packaging-projects/
 ###########
 REPTRAV="$(dirname "$0")"
 REPLOG="rapports"
-REPBUILD="build"
+REPPRODFINALE="public"
+REPBUILD="build/dist"
 FICSORTIE="${REPLOG}/build-rapport.txt"
 
 export TZ="Europe/Paris"
@@ -21,6 +24,11 @@ fi
 
 if ! test -d "${REPLOG}"; then
   mkdir -p "${REPLOG}" 2>/dev/null
+fi
+
+# securite en cas d'oubli dans pipeline CI/CD
+if ! test -d "${REPPRODFINALE}"; then
+  mkdir -p "${REPPRODFINALE}" 2>/dev/null
 fi
 
 exec 6>&1

@@ -89,10 +89,11 @@ workflow:
   - mkdir public || true
 
 .gestion_env_python_before: &gestion_env_python_before
-  - echo -e "${TXT_RED}Gestion env. virtuel python = envdev${TXT_CLEAR}"
+  - echo -e "${TXT_RED} Gestion env. virtuel python = envdev ${TXT_CLEAR}"
   - python3 -m venv $HOME/envdev || true
   - source $HOME/envdev/bin/activate || true
-  - echo -e "${TXT_RED}Gestion configuration git et curl et proxy ${TXT_CLEAR}"
+
+  - echo -e "${TXT_RED} Gestion configurations git curl et proxy ${TXT_CLEAR}"
   - git config --global http.sslVerify false
   - git config --global https.sslVerify false
   - git config --global https.proxy http://proxy.meteo.fr:11011
@@ -102,7 +103,7 @@ workflow:
   #- echo "cacert=/etc/ssl/certs/ca-certificates.crt" >> $HOME/.curlrc
 
 .gestion_pyenv: &gestion_pyenv
-  - echo -e "${TXT_RED}Gestion pyenv${TXT_CLEAR}"
+  - echo -e "${TXT_RED} Gestion pyenv ${TXT_CLEAR}"
     # - curl -kfsSL https://pyenv.run | bash || true
   - curl -k -s -S -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash || true
   - export PYENV_ROOT="$HOME/.pyenv"
@@ -110,6 +111,7 @@ workflow:
   - eval "$(pyenv init - bash)" || true
 
   ### docker MF mode installation indirect
+  - echo -e "${TXT_RED} Gestion pyenv multiversions python ${TXT_CLEAR}"
   - mkdir -p $HOME/.pyenv/cache/ || true
   - curl -k --output-dir $HOME/.pyenv/cache/ -o Python-3.10.19.tar.xz
       https://www.python.org/ftp/python/3.10.19/Python-3.10.19.tar.xz || true
@@ -126,12 +128,13 @@ workflow:
 
 .gestion_pip_nexus: &gestion_pip_nexus
 
-  - echo -e "${TXT_RED}Gestion pip nexus-sidev${TXT_CLEAR}"
+  - echo -e "${TXT_RED} Gestion pip nexus-sidev ${TXT_CLEAR}"
   - pip config set global.trusted-host nexus-sidev.meteo.fr || true
   - pip config set global.index http://nexus-sidev.meteo.fr/repository/pypi-group/pypi || true
   - pip config set global.index-url http://nexus-sidev.meteo.fr/repository/pypi-group/simple || true
 
 .gestion_pip_update: &gestion_pip_update
+  - echo -e "${TXT_RED} Requirements python par pip ${TXT_CLEAR}"
   - python3 -m pip install --upgrade pip
   - python3 -m pip install pylint-common --use-pep517
   - pip install -r docs/requirements.txt --root-user-action=ignore || true
@@ -177,8 +180,8 @@ stages:
   - lint
   # - test
   # - quality
-  #- sca
-  #- build
+  - sca
+  - build
   - deploy
 
 # Retry a job automatically if it fails (2 times)
@@ -193,32 +196,34 @@ job:Lint:
      # override the policy
       policy: pull
   script:
-    - echo -e "${TXT_RED}scripts lint${TXT_CLEAR}"
+    - echo -e "${TXT_RED} scripts lint ${TXT_CLEAR}"
     - rm -rf public/* || true
-    - echo -e "${TXT_RED}shellcheck${TXT_CLEAR}"
+
+    - echo -e "${TXT_RED} shellcheck ${TXT_CLEAR}"
     - devtools/lanceur_shellcheck.bash || true
-    - echo -e "${TXT_RED}pylint${TXT_CLEAR}"
+
+    - echo -e "${TXT_RED} pylint ${TXT_CLEAR}"
     - devtools/lanceur_pylint.bash || true
-    - echo -e "${TXT_RED}ruff${TXT_CLEAR}"
+
+    - echo -e "${TXT_RED} ruff ${TXT_CLEAR}"
     - devtools/lanceur_ruff.bash || true
-    - echo -e "${TXT_RED}toc${TXT_CLEAR}"
+
+    - echo -e "${TXT_RED} tox ${TXT_CLEAR}"
     - devtools/lanceur_tox.bash || true
-    
 
-    # - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
-    # - ls -ail rapports/*
-    # #- mv rapports/coverage* public/ || true
+    - echo -e "${TXT_RED} Documentations ${TXT_CLEAR}"
 
-    - echo -e "${TXT_RED}Documentations${TXT_CLEAR}"
-    - echo -e "${TXT_RED}mefversions${TXT_CLEAR}"
+    - echo -e "${TXT_RED} mefversions ${TXT_CLEAR}"
     - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
-    - echo -e "${TXT_RED}doxygen${TXT_CLEAR}"
+    
+    - echo -e "${TXT_RED} doxygen ${TXT_CLEAR}"
     - devtools/lanceur_doxygen.bash || true
-    - echo -e "${TXT_RED}sphinx${TXT_CLEAR}"
+
+    - echo -e "${TXT_RED} sphinx ${TXT_CLEAR}"
     - devtools/lanceur_sphinx.bash || true
 
+    - echo -e "${TXT_RED} ls et déplacements ${TXT_CLEAR}"
     - ls -ail rapports/*
-
     - mv rapports/*txt public/ || true
     - mv rapports/*xml public/ || true
     - mv rapports/tox_cov_html public/ || true
@@ -279,51 +284,51 @@ job:Lint:
 #     paths:
 #       - public
 
-# job:CheckDependencies:
-#   stage: sca
-#   cache:
-#     policy: pull
-#     key: cache-$CI_COMMIT_REF_SLUG
-#     paths:
-#       - public/
-#   before_script:
-#     - cd "$CI_PROJECT_DIR"
-#   script:
-#     - echo -e "${TXT_RED}script sca${TXT_CLEAR}"
-#   allow_failure: true
-#   rules:
-#     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     - if: $CI_COMMIT_BRANCH == 'main'
-#   artifacts:
-#     paths:
-#       - public
+job:CheckDependencies:
+  stage: sca
+  cache:
+    policy: pull
+    key: cache-$CI_COMMIT_REF_SLUG
+    paths:
+      - public/
+  before_script:
+    - cd "$CI_PROJECT_DIR"
+  script:
+    - echo -e "${TXT_RED} script sca ${TXT_CLEAR}"
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'main'
+  artifacts:
+    paths:
+      - public
 
-# job:Packaging:
-#   stage: build
-#   #image: "python:3.12-slim"
-#   cache:
-#     policy: pull
-#     key: cache-$CI_COMMIT_REF_SLUG
-#     paths:
-#       - public/
-#   before_script:
-#     - cd "$CI_PROJECT_DIR"
-#     - *gestion_env_python_before
-#     - *gestion_pip_nexus
-#     - *gestion_pip_update
-#   script:
-#     - echo -e "${TXT_RED}script build${TXT_CLEAR}"
-#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-#     - devtools/lanceur_build.bash || true
-#     - ls -ail *
-#     - mv rapports/*txt public/ || true
-#     - ls -ail build/* || true
-#   artifacts:
-#     paths:
-#       - public
-#       - build/dist
-#   only:
-#     - main
+job:Packaging:
+  stage: build
+  #image: "python:3.12-slim"
+  cache:
+    policy: pull
+    key: cache-$CI_COMMIT_REF_SLUG
+    paths:
+      - public/
+  before_script:
+    - cd "$CI_PROJECT_DIR"
+    - *gestion_env_python_before
+    - *gestion_pip_nexus
+    - *gestion_pip_update
+  script:
+    - echo -e "${TXT_RED} script build ${TXT_CLEAR}"
+    - devtools/lanceur_build.bash || true
+    
+    - ls -ail *
+    - mv rapports/*txt public/ || true
+    - ls -ail build/* || true
+  artifacts:
+    paths:
+      - public
+      - build/dist
+  only:
+    - main
 
 job:Deploy:
   stage: deploy

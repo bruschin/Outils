@@ -17,6 +17,7 @@
     + DO : Ruff
     + DO : Tox
     + DO : Sphinx
+    + DO : Build wheel
 
 ## [2025-12-17] CA V1.4.1
 
