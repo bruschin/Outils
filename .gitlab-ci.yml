@@ -94,6 +94,8 @@ workflow:
   - source $HOME/envdev/bin/activate || true
 
   - echo -e "${TXT_RED} Gestion configurations git curl et proxy ${TXT_CLEAR}"
+  - apt-get update || true
+  - apt-get install -y ca-certificates git curl wget
   - git config --global http.sslVerify false
   - git config --global https.sslVerify false
   - git config --global https.proxy http://proxy.meteo.fr:11011
@@ -313,13 +315,14 @@ job:Packaging:
       - public/
   before_script:
     - cd "$CI_PROJECT_DIR"
+    - *some_mise_en_forme_before
     - *gestion_env_python_before
     - *gestion_pip_nexus
     - *gestion_pip_update
   script:
     - echo -e "${TXT_RED} script build ${TXT_CLEAR}"
     - devtools/lanceur_build.bash || true
-    
+
     - ls -ail *
     - mv rapports/*txt public/ || true
     - ls -ail build/* || true
