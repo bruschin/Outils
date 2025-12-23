@@ -9,6 +9,8 @@
     + DO : Doxygen
     + DO : Shellcheck
     + DO : Pylint
+    + DO : Ruff
+    + DO : Tox
 
 ## [2025-12-17] CA V1.4.1
 

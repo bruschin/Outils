@@ -42,14 +42,18 @@ workflow:
 
 # https://docs.gitlab.com/ee/ci/yaml/yaml_optimization.html
 .some-actions-apt-before: &some-actions-apt-before
+
   # Pour éviter ultérieurement  : debconf: (Can't locate Term/ReadLine.pm ....
   - echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
   - apt-get update || true
   - apt-get upgrade -y || true
+
   # Pour doxygen : https://askubuntu.com/questions/1291874/how-to-install-doxygen-on-ubuntu
   - apt-get install -y doxygen libxapian30 graphviz dia
+
   # Pour  shellcheck :
   - apt-get install -y shellcheck
+
   # Pour pylint :
   - apt-get install -y ca-certificates git curl wget
   #- wget --no-check-certificate https://gitlab.com/gitlab-org/cli/-/releases/v1.80.4/downloads/glab_1.80.4_linux_amd64.deb
@@ -60,12 +64,17 @@ workflow:
   #- glab -R $CI_PROJECT_PATH securefile download $SECURE_FILE_ID --path="/etc/ssl/certs"
   # curl --header "PRIVATE-TOKEN: ****" --url "https://gitlab.meteo.fr/api/v4/projects/2929/secure_files
 
+  # pour pyenv:
+  # https://blog.stephane-robert.info/docs/developper/programmation/python/pyenv/
+  - apt-get install -y make build-essential libssl-dev zlib1g-dev 
+      libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm 
+      libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev
+      liblzma-dev python3-openssl
+
   - export CURL_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"
   - update-ca-certificates -f
-  # - apt-get install -y rhino lcov
-  #     build-essential zlib1g-dev libffi-dev tk-dev|| true
-  # - apt-get install -y libbz2-dev libreadline-dev libsqlite3-dev libncurses-dev
-  #     libssl-dev liblzma-dev python3-sphinx make || true
+  # - apt-get install -y rhino lcov || true
+  # - apt-get install -y  libncurses-dev python3-sphinx || true
   # - apt-get install -y  python3-sphinx-copybutton sphinx-common
   #     python3-pydata-sphinx-theme python3-alabaster || true
 .some_mise_en_forme_before: &some_mise_en_forme_before
@@ -105,6 +114,8 @@ workflow:
       https://www.python.org/ftp/python/3.11.14/Python-3.11.14.tar.xz || true
   - curl -k --output-dir $HOME/.pyenv/cache/ -o Python-3.12.12.tar.xz
       https://www.python.org/ftp/python/3.12.12/Python-3.12.12.tar.xz || true
+  - if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
   - pyenv install 3.10.19 || true
   - pyenv install 3.11.14 || true
   - pyenv install 3.12.12 || true
@@ -179,12 +190,16 @@ job:Lint:
      # override the policy
       policy: pull
   script:
-    - echo -e "${TXT_RED}script lint${TXT_CLEAR}"
+    - echo -e "${TXT_RED}scripts lint${TXT_CLEAR}"
     - rm -rf public/* || true
+    - echo -e "${TXT_RED}shellcheck${TXT_CLEAR}"
     - devtools/lanceur_shellcheck.bash || true
+    - echo -e "${TXT_RED}pylint${TXT_CLEAR}"
     - devtools/lanceur_pylint.bash || true
+    - echo -e "${TXT_RED}ruff${TXT_CLEAR}"
     - devtools/lanceur_ruff.bash || true
-    # - devtools/lanceur_tox.bash || true
+    - echo -e "${TXT_RED}toc${TXT_CLEAR}"
+    - devtools/lanceur_tox.bash || true
     
 
     # - echo -e "${TXT_RED}Gestion rapports linters${TXT_CLEAR}"
@@ -192,8 +207,11 @@ job:Lint:
     # #- mv rapports/coverage* public/ || true
 
     - echo -e "${TXT_RED}Documentations${TXT_CLEAR}"
+    - echo -e "${TXT_RED}mefversions${TXT_CLEAR}"
     - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
+    - echo -e "${TXT_RED}doxygen${TXT_CLEAR}"
     - devtools/lanceur_doxygen.bash || true
+    - echo -e "${TXT_RED}sphinx${TXT_CLEAR}"
     #- devtools/lanceur_sphinx.bash || true
 
     - ls -ail rapports/*
