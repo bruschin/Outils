@@ -222,7 +222,7 @@ job:Lint:
     - devtools/lanceur_doxygen.bash || true
 
     - echo -e "${TXT_RED} sphinx ${TXT_CLEAR}"
-    - devtools/lanceur_sphinx.bash || true
+    - devtools/lanceur_sphinx.bash "gitlab" || true
 
     - echo -e "${TXT_RED} ls et déplacements ${TXT_CLEAR}"
     - ls -ail rapports/*
@@ -232,7 +232,7 @@ job:Lint:
     - mv rapports/doxygen public/ || true
     - mv build/sphinx-* public/ || true
       ### index de gitlab-pages :
-    - cp -f docs/index.html public/ || true
+    - cp -f docs/index_gitlab-pages.html public/index.html || true
     - cp -f docs/Outils* public/ || true
     - ls -ail public/*
 

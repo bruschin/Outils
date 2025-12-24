@@ -1,12 +1,20 @@
 #!/bin/bash
 ###########
 ## genere documentation avec sphinx
-## nécessite d'avoir installé sphinx graphviz rhino
+## [2025-12-24] BN V1.0.1
+## nécessite d'avoir installé python3-sphinx
 ## gestion version dans conf.py gérée par mef_versions.bash
 ###########
 REPTRAV="$(dirname "$0")"
 REPLOG="rapports"
 FICSORTIE="${REPLOG}/sphinx-rapport.txt"
+PLATEFORME="gitlab"
+
+if test -n "${1}"; then
+	PLATEFORME="${1}"
+fi
+
+setenv PLATEFORMENAME="${PLATEFORME}"
 
 export GIT_PYTHON_REFRESH=quiet
 export GIT_PYTHON_GIT_EXECUTABLE="/usr/bin/git"

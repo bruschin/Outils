@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<!--
+  Template il faudra remplacer les 4 chaines entre @@: 
+  RELEASE_VERSION DATE COMMIT PIPELINE
+  avant mise en place
+-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset: iso-8859-15" />
+<meta name="language" content="french" />
+<meta name="robots" content="index,follow" />
+<meta  name="description" content="Menu Gitlab-pages" />
+<title>Outils pages (Version = @RELEASE_VERSION@ - @DATE@)</title>
+<link rel="ICON" href="Outils.png"/>
+<style type="TEXT/CSS">
+.colorize {text-align:left; background-color: rgb(214, 203, 139);
+  border: 3px solid rgb(24, 136, 48);margin: 10px 10px 10px 10px;}
+.colorize2 {text-align:left; background-color: rgb(95, 150, 63);
+  border: 3px solid rgb(62, 66, 1);margin: 10px 10px 10px 10px;}
+.mef1 {font-family: "Times New Roman",Verdana, Arial, helvetica, sans-serif;
+	background-color: #BFCDE7;border: 1px solid rgb(62, 66, 1);
+	margin: 10px 10px 10px 10px;}
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+	border: 3px solid rgb(62, 66, 1);
+	margin: 10px 10px 10px 10px;
+	background-color: rgb(95, 150, 63);
+}
+/* https://stackoverflow.com/questions/68141663/table-with-css-grid */
+.box {
+  border-radius: 5px;
+  margin: 10px 10px 10px 10px;
+	background-color: rgb(95, 150, 63);
+}
+.row {
+    display: contents;
+}
+</style>
+</head>
+<body>
+	<!--/* //NOSONAR */-->
+	<!-- https://next.sonarqube.com/sonarqube/coding_rules?open=Web%3AS5256&rule_key=Web%3AS5256 -->
+<div class="colorize" style="opacity: 0.5;">
+	<table aria-hidden="true"><tr>
+	<th id="logoOutils" rowspan ="5" 
+		style="vertical-align: middle;">&nbsp;<img src="Outils.png" 
+		style="width:48px;height:48px;border-style: none;vertical-align:middle;" 
+		alt="Outil Pegase Version = @RELEASE_VERSION@" 
+		title="Outil Pegase Version = @RELEASE_VERSION@" />&nbsp;</th>
+	<th id="nomproj">&nbsp;Nom du projet :&nbsp;</th>
+	<th id="Outil_Pegase">&nbsp;Outil Pegase&nbsp;</th>
+	<th id="Outil_Version">&nbsp;Version =&nbsp;</th>
+	<th id="Outil_Release">&nbsp;@RELEASE_VERSION@&nbsp;</th>
+	<th id=""Outil_Generation>&nbsp;g&eacute;n&eacute;r&eacute; le :&nbsp;</th>
+	<th id="Outil_Date">&nbsp;@DATE@&nbsp;</th>
+	<th id="Outil_Commit">&nbsp;Commit :&nbsp;</th>
+	<th id="Outil_Refcommit">&nbsp;<a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/tree/@COMMIT@" 
+	target="_blank">@COMMIT@</a>&nbsp;</th>
+	<th id="Outil_pipeline">&nbsp;Pipeline :&nbsp;</th>
+	<th id="Outil_Refpipeline">&nbsp;<a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/pipelines/@PIPELINE@" 
+	target="_blank">@PIPELINE@</a>&nbsp;</th></tr></table></div>
+	<div class="mef1" id="description">&nbsp;&nbsp;Le projet python 
+		<b>"Outil Pegase"</b>, propose un fichier = <b>pegase.py</b> qui calcule, 
+		l'heure de départ minimale théorique, pour effectuer des obligations 
+		quotidiennes de 7h24 de travail effectif (ou autre durée à régler en dur), 
+		d'après le renseignement de 1 à 4 badgeages passés en paramètres d'appel.
+		<br /><br />&nbsp;&nbsp;Badgeages de 
+		type xx[h:]mm. Exemple 9:24 ou 09h24 ou 13H56 (le h ou : central acceptent 
+		la casse min/maj).<br />Une fois commité et poussé sur gitlab, un pipeline 
+		CI/CD, <a 
+	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main">
+	<img src="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg" 
+	alt="pipeline status" title="pipeline status"/></a> piloté 
+	par le fichier .gitlab-ci.yml [Paramètres | CI/CD | Pipelines généraux ] lance :
+	<ol><li>🤪 Un contrôle de la qualité du code source python par
+	pylint|tox ou des codes en shell par 😀 shellcheck</li>
+	<li>🤝 Des tests unitaires (python 3.10, 3.11 et 3.12) par pytest 
+	(avec	calcul du % du code source couvert (outil coverage|tox))</li> 
+	<li>😻 Une mise en forme du code source python par ruff</li> 
+	<li>Deux auto-documentations par 🤏 Doxygen et 🤌 Sphinx</li>
+	<li>Un affichage web récapitulatif gitlab-pages [Déploiement | Pages | 
+		Domaines & paramètres = <a href="https://outils-e76d7e.gitlab.meteo.fr/">
+		https://outils-e76d7e.gitlab.meteo.fr/</a> ]</li>
+  <li>DO : gestion todo liste d'actions</li>
+  <li>DO 🤡 Build d'un package wheel</li>
+	<li>TODO :une analyse automatique de la qualité du code python par sonarqube :
+  Demande GLPI <a 
+  href="http://support.meteo.fr/index.php?redirect=ticket_379407">#0379407</a>
+  </li>
+	<li>TODO :ajout de badges gitlab</li></ol></div>
+	<div class="wrapper">
+	<div class="box a">
+	Documentation html<br />générée par :<ul>
+		<li>🤌 <a href="sphinx-html/index.html" id="Documentation_sphinx_html" 
+		target="_blank" title="Documentation du code source générée par 
+		sphinx">Sphinx</a></li>
+		<li>🤏 <a href="doxygen/html/index.html" id="Documentation_Doxygen" 
+		target="_blank" title="Documentation du code source générée par 
+		Doxygen">Doxygen</a></li></ul></div>
+<!--
+<li>🙏 Couverture du code source par des tests 
+unitaires en python version : <a href="htmlcov/3.12/index.html" 
+id="cov_3.12" target="_blank" 
+title="Couverture du code source python 3.12 par des tests 
+unitaires. Générée avec pytest">3.12</a>&nbsp;<a href="htmlcov/3.11/index.html" 
+id="cov_3.11" target="_blank" 
+title="Couverture du code source python 3.11 par des tests 
+unitaires. Générée avec pytest">3.11</a>&nbsp;<a href="htmlcov/3.10/index.html" 
+id="cov_3.10" target="_blank" 
+title="Couverture du code source python 3.10 par des tests 
+unitaires. Générée avec pytest">3.10</a></li>
+-->
+<div class="box b">Couverture du code python<br />par tests 
+unitaires via :<ul><li>🤝 <a href="tox_cov_html/index.html" id="tox coverage" 
+target="_blank" 
+title="Couverture par tox du code source python par des tests 
+unitaires.">Tox</a></li></ul></div>
+<div class="box c">TODO : Projet Outil Pegase<br />dans SonarQube<ul><li>🤞 <a 
+href="https://sonarcloud.io/project/overview?id=bruschin_Outils" 
+id="projet_sonarcoverage" target="_blank" 
+title="Projet requete_fin_mois dans SonarQube"><img 
+src="https://sonarcloud.io/api/project_badges/measure?project=
+bruschin_Outils&metric=alert_status" 
+alt="Outils Quality Gate" title="Outils Quality Gate" 
+width="48px"/> </a></li></ul></div>
+<div class="box d"><span class="colorize2"> Fichiers des Logs :</span>
+<ul>
+<li>🤡 <a href="build-rapport.txt" id="build" target="_blank" 
+title="Log packaging">Build</a></li>
+<li>🤏 <a href="doxygen-rapport.txt" id="doxygen" target="_blank" 
+title="Log doxygen">Doxygen</a></li>
+<li>🙈 <a href="mefversions-rapport.txt" id="mise_en_forme" target="_blank" 
+title="Log mise en forme">Mef_versions</a></li>
+<li>🤪 <a href="pylint-rapport.txt" id="pylint" target="_blank" 
+title="Log pylint">Pylint</a></li>
+<li>🤞 TODO : Sonar<!--<a href="sonar-rapport.txt" id="sonar" target="_blank" 
+title="Log sonar">Sonar-scanner</a></li>
+-->
+<!--
+<li>🙏 Pytest en python Version : <a href="pytest-rapport.3.12.txt" 
+id="pytest312" target="_blank" title="Log pytest 3.12">3.12</a>,&nbsp;<a 
+href="pytest-rapport.3.11.txt" id="pytest311" 
+target="_blank" title="Log pytest 3.11">3.11</a>,&nbsp;<a 
+href="pytest-rapport.3.10.txt" id="pytest310" 
+target="_blank" title="Log pytest 3.10">3.10</a></li>
+-->
+<li>😻 <a href="ruff-rapport.txt" id="ruff" target="_blank" 
+title="Log ruff">Ruff</a></li>
+<li>😀 <a href="shellcheck-rapport.txt" id="shellcheck" target="_blank" 
+title="Log shellcheck">Shellcheck</a></li>
+<li>🤌 <a href="sphinx-rapport.txt" id="sphinx" target="_blank" 
+title="Log sphinx">Sphinx</a></li>
+<li>🤝 Tox : <a href="tox-rapport.txt" id="tox_rapport" target="_blank" 
+title="Log tox">Txt</a>&nbsp;<a href="tox_cov.xml" id="tox_xml" 
+target="_blank" title="Xml tox">Xml</a></li>
+</ul></div></div></div>
+</body>
+</html>
