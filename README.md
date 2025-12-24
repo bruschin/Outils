@@ -3,6 +3,8 @@
 [![pipeline status](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg)](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main)
 [![coverage report](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/coverage.svg)](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main)
 [![Latest Release](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/badges/release.svg)](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/releases)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bruschin_Outils&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bruschin_Outils)
+[![SonarQube Cloud](https://sonarcloud.io/images/project_badges/sonarcloud-dark.svg)](https://sonarcloud.io/summary/new_code?id=bruschin_Outils)
 
 ## [2025-12-24] BN V1.4.2
 
@@ -44,5 +46,5 @@
 
 ## Documentations
 
-+ [documentation du projet](https://outils-e76d7e.gitlab.meteo.fr/)
-+ ![coverage](https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/coverage.svg?job=Lint)
++ [documentation du projet gitlab](https://outils-e76d7e.gitlab.meteo.fr/)
++ [documentation du projet github](https://bruschin.github.io/Outils/)

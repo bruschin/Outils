@@ -57,11 +57,11 @@
 	<th id="Outil_Date">&nbsp;@DATE@&nbsp;</th>
 	<th id="Outil_Commit">&nbsp;Commit :&nbsp;</th>
 	<th id="Outil_Refcommit">&nbsp;<a 
-	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/tree/@COMMIT@" 
+	href="https://github.com/bruschin/Outils/commit/@COMMIT@"" 
 	target="_blank">@COMMIT@</a>&nbsp;</th>
 	<th id="Outil_pipeline">&nbsp;Pipeline :&nbsp;</th>
 	<th id="Outil_Refpipeline">&nbsp;<a 
-	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/pipelines/@PIPELINE@" 
+	href="https://github.com/bruschin/Outils/actions/runs/@PIPELINE@" 
 	target="_blank">@PIPELINE@</a>&nbsp;</th></tr></table></div>
 	<div class="mef1" id="description">&nbsp;&nbsp;Le projet python 
 		<b>"Outil Pegase"</b>, propose un fichier = <b>pegase.py</b> qui calcule, 
@@ -71,11 +71,11 @@
 		<br /><br />&nbsp;&nbsp;Badgeages de 
 		type xx[h:]mm. Exemple 9:24 ou 09h24 ou 13H56 (le h ou : central acceptent 
 		la casse min/maj).<br />Une fois commité et poussé sur gitlab, un pipeline 
-		CI/CD, <a 
+		CI/CD, <!-- <a 
 	href="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/-/commits/main">
 	<img src="https://gitlab.meteo.fr/desr-sires-pga/support_n1/outils/badges/main/pipeline.svg" 
-	alt="pipeline status" title="pipeline status"/></a> piloté 
-	par le fichier .gitlab-ci.yml [Paramètres | CI/CD | Pipelines généraux ] lance :
+	alt="pipeline status" title="pipeline status"/></a> --> piloté 
+	par le fichier outilpegase.yml [Paramètres | CI/CD | Pipelines généraux ] lance :
 	<ol><li>🤪 Un contrôle de la qualité du code source python par
 	pylint|tox ou des codes en shell par 😀 shellcheck</li>
 	<li>🤝 Des tests unitaires (python 3.10, 3.11 et 3.12) par pytest 
@@ -83,13 +83,12 @@
 	<li>😻 Une mise en forme du code source python par ruff</li> 
 	<li>Deux auto-documentations par 🤏 Doxygen et 🤌 Sphinx</li>
 	<li>Un affichage web récapitulatif gitlab-pages [Déploiement | Pages | 
-		Domaines & paramètres = <a href="https://outils-e76d7e.gitlab.meteo.fr/">
-		https://outils-e76d7e.gitlab.meteo.fr/</a> ]</li>
+		Domaines & paramètres = <a href="https://bruschin.github.io/Outils/">
+		https://bruschin.github.io/Outils/</a> ]</li>
   <li>DO : gestion todo liste d'actions</li>
   <li>DO 🤡 Build d'un package wheel</li>
 	<li>TODO :une analyse automatique de la qualité du code python par sonarqube :
-  Demande GLPI <a 
-  href="http://support.meteo.fr/index.php?redirect=ticket_379407">#0379407</a>
+  Demande GLPI #0379407
   </li>
 	<li>TODO :ajout de badges gitlab</li></ol></div>
 	<div class="wrapper">
