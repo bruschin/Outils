@@ -1,12 +1,14 @@
 #!/bin/bash
 ###########
-## genere  index gitlab-pages mais aussi Doxyfile et sphinx
+## genere  index gitlab-pages github-pages mais aussi Doxyfile et sphinx
+## [2025-12-24] BN V1.0.1
 ## en remplaçant 4 chaines :
 ## @RELEASE_VERSION@ @DATE@ @COMMIT@ @PIPELINE@
 ###########
 
 export TZ="Europe/Paris"
 REPTRAV="$(dirname "$0")"
+REPPRODFINALE="public"
 REPLOG="rapports"
 REPCONF="docs"
 FICSORTIE="${REPLOG}/mefversions-rapport.txt"
@@ -17,9 +19,11 @@ TAGRELEASE="@RELEASE_VERSION@"
 TAGDATE="@DATE@"
 TAGCOMMIT="@COMMIT@"
 TAGPIPELINE="@PIPELINE@"
-FIC_INDEX="${REPCONF}/index.html"
+FIC_INDEX1="${REPCONF}/index_gitlab-pages.html"
+FIC_INDEX2="${REPCONF}/index_github-pages.html"
 declare -a FICS_A_MODIFIER=(
-"${FIC_INDEX}"
+"${FIC_INDEX1}"
+"${FIC_INDEX2}"
 "${REPCONF}/Doxyfile"
 "${REPCONF}/conf.py"
 "${REPCONF}/sonar-project.properties"
@@ -102,6 +106,11 @@ if ! test -d "${REPLOG}"; then
   mkdir -p "${REPLOG}" 2>/dev/null
 fi
 
+# securite en cas d'oubli dans pipeline CI/CD
+if ! test -d "${REPPRODFINALE}"; then
+  mkdir -p "${REPPRODFINALE}" 2>/dev/null
+fi
+
 exec 6>&1
 exec >"${FICSORTIE}" 2>&1
 
@@ -111,7 +120,7 @@ echo "$0 : changement tag version dans divers fichiers"
 VERSION_EN_COURS="$(trouve_version \
                       "${FIC_VERSION_EN_COURS}" "^VERSION_PROJET=")"
 if test -n "${VERSION_EN_COURS}"; then
-  ## change TAGRELEASE de FIC_INDEX
+  ## change TAGRELEASE de FIC_INDEX1
   for ficachanger in "${FICS_A_MODIFIER[@]}"
   do
     nretour="$(change_tag "${TAGRELEASE}" "${VERSION_EN_COURS}" \
@@ -126,29 +135,38 @@ else
   echo "Pb pour trouver la version du projet"
 fi
 
-## change TAGDATE de FIC_INDEX
-nretour="$(change_tag "${TAGDATE}" "${LADATE}" "${FIC_INDEX}")"
-if test "${nretour}" != "0"; then
-  echo "Pb pour changer ${TAGDATE} dans ${FIC_INDEX}"
-else
-  echo "Changement ${TAGDATE} dans ${FIC_INDEX}"
-fi
+## change TAGDATE de FIC_INDEX1 et FIC_INDEX2
+for ficachanger in "${FIC_INDEX1}" "${FIC_INDEX2}"
+do
+	nretour="$(change_tag "${TAGDATE}" "${LADATE}" "${ficachanger}")"
+	if test "${nretour}" != "0"; then
+		echo "Pb pour changer ${TAGDATE} dans ${ficachanger}"
+	else
+		echo "Changement ${TAGDATE} dans ${ficachanger}"
+	fi
+done
 
-## change TAGCOMMIT de FIC_INDEX
-nretour="$(change_tag "${TAGCOMMIT}" "${LECOMMIT}" "${FIC_INDEX}")"
-if test "${nretour}" != "0"; then
-  echo "Pb pour changer ${TAGCOMMIT} dans ${FIC_INDEX}"
-else
-  echo "Changement ${TAGCOMMIT} dans ${FIC_INDEX}"
-fi
+## change TAGCOMMIT de FIC_INDEX1 et FIC_INDEX2
+for ficachanger in "${FIC_INDEX1}" "${FIC_INDEX2}"
+do
+	nretour="$(change_tag "${TAGCOMMIT}" "${LECOMMIT}" "${ficachanger}")"
+	if test "${nretour}" != "0"; then
+		echo "Pb pour changer ${TAGCOMMIT} dans ${ficachanger}"
+	else
+		echo "Changement ${TAGCOMMIT} dans ${ficachanger}"
+	fi
+done
 
-## change TAGPIPELINE de FIC_INDEX
-nretour="$(change_tag "${TAGPIPELINE}" "${LEPIPELINE}" "${FIC_INDEX}")"
-if test "${nretour}" != "0"; then
-  echo "Pb pour changer ${TAGPIPELINE} dans ${FIC_INDEX}"
-else
-  echo "Changement ${TAGPIPELINE} dans ${FIC_INDEX}"
-fi
+## change TAGPIPELINE de FIC_INDEX1 et FIC_INDEX2
+for ficachanger in "${FIC_INDEX1}" "${FIC_INDEX2}"
+do
+	nretour="$(change_tag "${TAGPIPELINE}" "${LEPIPELINE}" "${ficachanger}")"
+	if test "${nretour}" != "0"; then
+		echo "Pb pour changer ${TAGPIPELINE} dans ${ficachanger}"
+	else
+		echo "Changement ${TAGPIPELINE} dans ${ficachanger}"
+	fi
+done
 
 exec 1>&6 6>&-
 

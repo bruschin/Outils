@@ -198,6 +198,9 @@ job:Lint:
      # override the policy
       policy: pull
   script:
+    - echo -e "${TXT_RED} mefversions ${TXT_CLEAR}"
+    - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
+    
     - echo -e "${TXT_RED} scripts lint ${TXT_CLEAR}"
     - rm -rf public/* || true
 
@@ -214,9 +217,6 @@ job:Lint:
     - devtools/lanceur_tox.bash || true
 
     - echo -e "${TXT_RED} Documentations ${TXT_CLEAR}"
-
-    - echo -e "${TXT_RED} mefversions ${TXT_CLEAR}"
-    - devtools/lanceur_mefversions.bash $CI_COMMIT_SHORT_SHA $CI_PIPELINE_ID
     
     - echo -e "${TXT_RED} doxygen ${TXT_CLEAR}"
     - devtools/lanceur_doxygen.bash || true

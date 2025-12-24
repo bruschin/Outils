@@ -1,6 +1,6 @@
 [project]
 name = "Outils"
-version = "1.4.2"
+version = "@RELEASE_VERSION@"
 description = """
 Affichage bilan journalier Pegase selon badgeages et heure départ.
 """
@@ -109,14 +109,14 @@ docstring-code-format = true
 docstring-code-line-length = "dynamic"
 
 [tool.sonar]
-projectKey = "bruschin_listem3u"
+projectKey = "bruschin_Outils"
 qualitygate.wait = true
-projectName = "listem3u"
+projectName = "Outils"
 projectBaseDir = "src"
 sourceEncoding = "UTF-8"
 
 [tool.poetry]
-version = "1.9.4"
+version = "@RELEASE_VERSION@"
 description = """
 Affichage bilan journalier Pegase selon badgeages et heure départ.
 """
