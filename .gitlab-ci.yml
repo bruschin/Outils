@@ -142,6 +142,11 @@ workflow:
   - pip install -r docs/requirements.txt --root-user-action=ignore || true
   - pip install --upgrade pip --break-system-packages --root-user-action=ignore || true
 
+.gestion_twine_nexus: &gestion_twine_nexus
+  - echo -e "${TXT_RED} Requirements nexus pour twine ${TXT_CLEAR}"
+  - python3 -m pip install --upgrade pip
+  - python3 -m pip install pylint-common --use-pep517
+
 before_script:
   # Normalize package name once at the start of any job
 
@@ -153,6 +158,7 @@ before_script:
   - *gestion_env_python_before
   - *gestion_pyenv
   - *gestion_pip_nexus
+  - *gestion_twine_nexus
   - *gestion_pip_update
 
 #https://misc.flogisoft.com/bash/tip_colors_and_formatting
@@ -318,10 +324,12 @@ job:Packaging:
     - *some_mise_en_forme_before
     - *gestion_env_python_before
     - *gestion_pip_nexus
+    - *gestion_twine_nexus
     - *gestion_pip_update
   script:
     - echo -e "${TXT_RED} script build ${TXT_CLEAR}"
     - devtools/lanceur_build.bash || true
+    - devtools/lanceur_upload_nexus.bash ${CI_PROJECTNAME} ${CI_USERNAME} ${CI_PASSWORD} || true
 
     - ls -ail *
     - mv rapports/*txt public/ || true
