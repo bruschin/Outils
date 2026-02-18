@@ -186,11 +186,11 @@ before_script:
 
 stages:
   - lint
-  # - test
-  # - quality
   - sca
   - build
   - deploy
+  # - test
+  # - quality
 
 # Retry a job automatically if it fails (2 times)
 .retry:
@@ -245,52 +245,6 @@ job:Lint:
   artifacts:
     paths:
       - public
-
-# job:Tests:
-#   stage: test
-#   image: "python:$VERSION-slim"
-#   cache:
-#     - key: cache-$CI_COMMIT_REF_SLUG
-#      # override the policy
-#       policy: pull
-#   script:
-#     - echo -e "${TXT_RED}script test${TXT_CLEAR}"
-#     - echo -e "${TXT_YELLOW}Stage test en version = ${VERSION}${TXT_CLEAR}" || true
-#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-#     - devtools/lanceur_pytest.bash "${VERSION}" || true
-#     - ls -ail rapports/*
-#     - mv -f rapports/htmlcov public/ || true
-#     - mv rapports/coverage* public/ || true
-#     - mv rapports/*txt public/  || true
-#   parallel:
-#     matrix:
-#       # https://docs.gitlab.com/ee/ci/yaml/#parallelmatrix
-#       - VERSION: ["3.10", "3.11", "3.12"]
-#   artifacts:
-#     paths:
-#       - public
-
-# job:Sonar:
-#   stage: quality
-#   #image: python:3.12-slim
-#   cache:
-#     policy: pull
-#     key: cache-$CI_COMMIT_REF_SLUG
-#     paths:
-#       - "${SONAR_USER_HOME}/cache"
-#       - public/
-#   script:
-#     - echo -e "${TXT_RED}script sonar${TXT_CLEAR}"
-#     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
-#     - devtools/lanceur_pysonar.bash || true
-#     - mv -f rapports/*txt public/ || true
-#   allow_failure: true
-#   rules:
-#     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
-#     - if: $CI_COMMIT_BRANCH == 'main'
-#   artifacts:
-#     paths:
-#       - public
 
 job:CheckDependencies:
   stage: sca
@@ -360,3 +314,49 @@ job:Deploy:
   pages: true # specifies that this is a Pages job
   only:
     - main
+
+  # job:Tests:
+  #   stage: test
+  #   image: "python:$VERSION-slim"
+  #   cache:
+  #     - key: cache-$CI_COMMIT_REF_SLUG
+  #      # override the policy
+  #       policy: pull
+  #   script:
+  #     - echo -e "${TXT_RED}script test${TXT_CLEAR}"
+  #     - echo -e "${TXT_YELLOW}Stage test en version = ${VERSION}${TXT_CLEAR}" || true
+  #     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+  #     - devtools/lanceur_pytest.bash "${VERSION}" || true
+  #     - ls -ail rapports/*
+  #     - mv -f rapports/htmlcov public/ || true
+  #     - mv rapports/coverage* public/ || true
+  #     - mv rapports/*txt public/  || true
+  #   parallel:
+  #     matrix:
+  #       # https://docs.gitlab.com/ee/ci/yaml/#parallelmatrix
+  #       - VERSION: ["3.10", "3.11", "3.12"]
+  #   artifacts:
+  #     paths:
+  #       - public
+
+  # job:Sonar:
+  #   stage: quality
+  #   #image: python:3.12-slim
+  #   cache:
+  #     policy: pull
+  #     key: cache-$CI_COMMIT_REF_SLUG
+  #     paths:
+  #       - "${SONAR_USER_HOME}/cache"
+  #       - public/
+  #   script:
+  #     - echo -e "${TXT_RED}script sonar${TXT_CLEAR}"
+  #     # - pip install -r docs/requirements.txt --root-user-action=ignore || true
+  #     - devtools/lanceur_pysonar.bash || true
+  #     - mv -f rapports/*txt public/ || true
+  #   allow_failure: true
+  #   rules:
+  #     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  #     - if: $CI_COMMIT_BRANCH == 'main'
+  #   artifacts:
+  #     paths:
+  #       - public
